@@ -1,4 +1,7 @@
 {
   "name": "@super-skeleton/auth",
-  "version": "0.0.1"
+  "version": "0.0.1",
+  "publishConfig": {
+    "access": "public"
+  }
 }
