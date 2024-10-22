@@ -1,3 +1,13 @@
+## 0.3.0 (2024-10-22)
+
+### 🚀 Features
+
+- added app package
+
+### ❤️  Thank You
+
+- The Enthusiast
+
 ## 0.2.0 (2024-10-22)
 
 ### 🚀 Features
