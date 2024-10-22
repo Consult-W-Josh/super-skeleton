@@ -1,3 +1,13 @@
+## 0.3.1 (2024-10-22)
+
+### 🩹 Fixes
+
+- made app access public
+
+### ❤️  Thank You
+
+- The Enthusiast
+
 ## 0.3.0 (2024-10-22)
 
 ### 🚀 Features
