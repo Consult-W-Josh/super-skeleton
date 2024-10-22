@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@super-skeleton/app": ["libs/app/src/index.ts"],
       "@super-skeleton/auth": ["libs/auth/src/index.ts"],
       "@super-skeleton/payments": ["libs/payments/src/index.ts"]
     }
