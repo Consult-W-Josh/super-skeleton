@@ -1,3 +1,3 @@
 export function payments(): string {
-  return 'payments';
+	return 'payments';
 }

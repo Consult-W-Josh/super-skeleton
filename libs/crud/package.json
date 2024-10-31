@@ -1,0 +1,8 @@
+{
+  "name": "@super-skeleton/crud",
+  "version": "0.0.1",
+  "dependencies": {
+    "mongoose": "^8.7.3",
+    "tslib": "^2.3.0"
+  }
+}

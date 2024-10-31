@@ -38,5 +38,9 @@ testem.log
 .DS_Store
 Thumbs.db
 
+.env
+.env.*
+.*.env
+
 .nx/cache
 .nx/workspace-data

@@ -1,14 +1,16 @@
-import express from 'express';
+import { constructSuperSkeletonExpressApp } from "@super-skeleton/app";
+import { secrets } from "./environment";
 
-const host = process.env.HOST ?? 'localhost';
-const port = process.env.PORT ? Number(process.env.PORT) : 3000;
+const port = 4212;
 
-const app = express();
+const app = constructSuperSkeletonExpressApp( {
+	mongoDbUrl: secrets.mongoDbUrl
+} );
 
-app.get('/', (req, res) => {
-  res.send({ message: 'Hello API' });
-});
+app.get( '/', ( req, res ) => {
+	res.send( { message: 'Hello API' } );
+} );
 
-app.listen(port, host, () => {
-  console.log(`[ ready ] http://${host}:${port}`);
-});
+app.listen( port, () => {
+	console.log( `[ ready ]: ${port}` );
+} );
