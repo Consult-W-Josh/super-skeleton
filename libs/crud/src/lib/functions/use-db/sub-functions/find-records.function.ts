@@ -7,6 +7,5 @@ export async function findRecords<T>( {
   model: Model<T>;
   query: FilterQuery<T>;
 } ): Promise<Array<T>> {
-	const result = await model.find( query );
-	return result;
+	return model.find( query );
 }
