@@ -1,3 +1,13 @@
+## 0.5.0 (2024-11-01)
+
+### 🚀 Features
+
+- updated dependencies for notifications and utils packages ([6824f31](https://github.com/joshuaben-seth/super-skeleton/commit/6824f31))
+
+### ❤️  Thank You
+
+- The Enthusiast
+
 ## 0.4.0 (2024-11-01)
 
 ### 🚀 Features
