@@ -6,7 +6,7 @@ import {
 import { Email, EmailDependency, EmailDependencyCreds } from '../../types';
 
 export class ElasticEmailDependency extends EmailDependency<string> {
-	private emailApi: EmailsApi;
+	private readonly emailApi: EmailsApi;
 
 	constructor( depCreds: EmailDependencyCreds<string> ) {
 		super( depCreds );
