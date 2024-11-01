@@ -1,4 +1,4 @@
-import { DbOp, UseDbConfig } from '../../types';
+import { DbOp, UseDbConfig } from '../../../types';
 import {
 	validateCreateConfig,
 	validateReadConfig,

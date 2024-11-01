@@ -4,7 +4,7 @@
 
 - made app access public
 
-### ❤️  Thank You
+### ❤️ Thank You
 
 - The Enthusiast
 
@@ -14,7 +14,7 @@
 
 - added app package
 
-### ❤️  Thank You
+### ❤️ Thank You
 
 - The Enthusiast
 
@@ -24,7 +24,7 @@
 
 - made access public
 
-### ❤️  Thank You
+### ❤️ Thank You
 
 - The Enthusiast
 
@@ -32,8 +32,8 @@
 
 ### 🚀 Features
 
-- setup auth and payments projects
+- setup index and payments projects
 
-### ❤️  Thank You
+### ❤️ Thank You
 
 - The Enthusiast

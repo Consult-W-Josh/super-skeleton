@@ -9,10 +9,14 @@
   },
   "private": true,
   "dependencies": {
+    "@elasticemail/elasticemail-client-ts-axios": "^4.0.22",
+    "@sendgrid/mail": "^8.1.4",
     "axios": "^1.6.0",
     "cors": "^2.8.5",
     "express": "4.21.1",
-    "mongoose": "^8.7.3"
+    "mongoose": "^8.7.3",
+    "sendim": "^1.2.192",
+    "sendim-brevo": "^1.2.246"
   },
   "devDependencies": {
     "@eslint/js": "^9.8.0",

@@ -1,4 +1,4 @@
-import { DbOp, UseDbConfig } from '../../../types';
+import { DbOp, UseDbConfig } from '../../../../types';
 
 function validateUseDbConfig<T = unknown>( {
 	prop,

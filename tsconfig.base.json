@@ -20,7 +20,8 @@
       "@super-skeleton/crud": ["libs/crud/src/index.ts"],
       "@super-skeleton/licenses": ["libs/licenses/src/index.ts"],
       "@super-skeleton/notifications": ["libs/notifications/src/index.ts"],
-      "@super-skeleton/payments": ["libs/payments/src/index.ts"]
+      "@super-skeleton/payments": ["libs/payments/src/index.ts"],
+      "@super-skeleton/utils": ["libs/utils/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

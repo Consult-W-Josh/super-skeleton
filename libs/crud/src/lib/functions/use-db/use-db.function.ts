@@ -1,6 +1,6 @@
 import { Model } from 'mongoose';
-import { isMongooseModel, validateDbOp } from '../helpers';
-import { crudErrors } from '../constants';
+import { isMongooseModel, validateDbOp } from './helpers';
+import { crudErrors } from '../../constants';
 import { DbOp, DbOpReturnType, UseDbConfig } from '../../types';
 
 export async function useDb<T, Op extends DbOp>( {
