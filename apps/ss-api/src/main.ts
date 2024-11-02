@@ -5,8 +5,6 @@ import {
 	sendTemplateEmailWith
 } from '@super-skeleton/notifications';
 
-import { ssCrud } from '@super-skeleton/crud';
-
 const port = 4212;
 
 const app = constructSuperSkeletonExpressApp( {
