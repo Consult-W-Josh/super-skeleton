@@ -1,1 +1,5 @@
-export * from './lib';
+import { useDb } from './lib';
+
+export const ssCrud = {
+	useDb
+};
