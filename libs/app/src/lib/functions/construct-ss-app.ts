@@ -2,13 +2,12 @@ import express = require( 'express' );
 import { urlencoded, json, NextFunction, Request, Response, Application } from 'express';
 import cors = require( 'cors' );
 import { catchAllErrors } from './catch-all-errors.function';
-import { init } from '@super-skeleton/crud';
 
 interface SuperSkeletonExpressAppOptions {
 	mongoDbUrl?: string;
 }
 
-export function constructSuperSkeletonExpressApp( 
+export function constructSuperSkeletonExpressApp(
 	{
 		mongoDbUrl,
 	}: SuperSkeletonExpressAppOptions
