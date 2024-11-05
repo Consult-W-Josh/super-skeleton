@@ -5,7 +5,7 @@ export async function createRecord<T>( {
 	data
 }: {
   model: Model<T>;
-  data: T;
+  data: Partial<T>;
 } ): Promise<T> {
 	const result = new model( data );
 	await result.save();
