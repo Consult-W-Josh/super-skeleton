@@ -19,6 +19,8 @@ export type DbOpReturnType<T> = {
 export type Query<T> = { query: FilterQuery<T> };
 export type Data<T> = { data: Partial<T> };
 
+export type UseDbConfig<T> = Query<T> & Data<T>
+
 export type UseDbConfigType<T> = {
   [DbOp.c]: Data<T>;
   [DbOp.r]: Query<T>;

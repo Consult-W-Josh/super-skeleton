@@ -16,7 +16,8 @@
     "express": "4.21.1",
     "mongoose": "^8.7.3",
     "sendim": "^1.2.192",
-    "sendim-brevo": "^1.2.246"
+    "sendim-brevo": "^1.2.246",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@eslint/js": "^9.8.0",

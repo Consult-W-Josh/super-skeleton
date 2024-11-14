@@ -1,4 +1,4 @@
-import { DbOp, UseDbConfig } from '../../../types';
+import { DbOp, UseDbConfig, UseDbConfigType } from '../../../types';
 import {
 	validateCreateConfig,
 	validateReadConfig,
@@ -6,7 +6,7 @@ import {
 } from './validators';
 
 export const validateDbOp: {
-  [key in DbOp]: ( config: UseDbConfig<unknown> ) => void;
+  [key in DbOp]: ( config: UseDbConfigType<unknown>[key] ) => void;
 } = {
 	[DbOp.c]: ( config ) => {
 		validateCreateConfig( config );

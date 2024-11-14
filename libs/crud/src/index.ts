@@ -1,8 +1,11 @@
-import { useDb, createModel } from './lib';
+import { useDb, createModel, init, md, createSchema } from './lib';
 
 export const ssCrud = {
+	init,
 	useDb,
-	createModel
+	createModel,
+	createSchema,
+	md,
 };
 
 export * from './lib';

@@ -1,3 +1,1 @@
-export function index(): string {
-	return 'index';
-}
+export * from './functions';

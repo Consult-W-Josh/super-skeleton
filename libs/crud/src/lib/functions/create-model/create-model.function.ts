@@ -1,30 +1,14 @@
-import { model, Model, Schema, SchemaDefinition } from 'mongoose';
-import { createSchema } from './create-schema.function';
+import { Model } from "mongoose";
+import { crudErrors } from "../../constants";
+import { SsModel, SsOrms } from "../../types";
+import { createSchema } from "./create-schema.function";
+import { createMongooseModelFromSchema } from "./mongoose";
 
-export function createModel<T, Methods = unknown>(
-	definition: SchemaDefinition<T>,
-	collectionName: string,
-	methods = undefined
-): {
-  model: Model<T, unknown, Methods>;
-  schema: Schema<T>;
-} {
-	const sch = createSchema( definition, methods );
-	return {
-		model: model<T, Model<T, unknown, Methods>>( collectionName, sch ),
-		schema: sch
-	};
-}
+export function createModel<T>( model: SsModel<T> ): Model<T> {
+	const schema = createSchema( model.schema, model.orm );
+	if ( model.orm === SsOrms.mongoose ) {
+		return createMongooseModelFromSchema<T>( schema, model.name ).model;
+	}
 
-export function createModelFromSchema<T, Methods = unknown>(
-	sch: Schema<T>,
-	collectionName: string
-): {
-  model: Model<T, unknown, Methods>;
-  schema: Schema<T>;
-} {
-	return {
-		model: model<T, Model<T, unknown, Methods>>( collectionName, sch ),
-		schema: sch
-	};
+	throw new Error( crudErrors.invalidOrm );
 }

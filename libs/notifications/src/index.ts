@@ -1,6 +1,6 @@
 import {sendTemplateEmailWith} from './lib';
 
-export const ssEmail = {
+export const ssNotifications = {
 	sendTemplateEmailWith,
 };
 

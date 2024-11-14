@@ -1,4 +1,4 @@
-import { DbOp, UseDbConfig } from '../../../../types';
+import { Data, DbOp, Query, UseDbConfig } from '../../../../types';
 
 function validateUseDbConfig<T = unknown>( {
 	prop,
@@ -8,7 +8,7 @@ function validateUseDbConfig<T = unknown>( {
 }: {
   prop: keyof UseDbConfig<T>;
   op: DbOp;
-  config: UseDbConfig<T>;
+  config: UseDbConfig<T> | Query<T> | Data<T>;
   shouldExist: boolean;
 } ) {
 	if ( !config[prop] && shouldExist ) {
@@ -20,7 +20,7 @@ function validateUseDbConfig<T = unknown>( {
 	}
 }
 
-export function validateCreateConfig<T>( config: UseDbConfig<T> ) {
+export function validateCreateConfig<T>( config: Data<T> ) {
 	validateUseDbConfig( {
 		prop: 'query',
 		op: DbOp.c,
@@ -36,7 +36,7 @@ export function validateCreateConfig<T>( config: UseDbConfig<T> ) {
 	} );
 }
 
-export function validateReadConfig<T>( config: UseDbConfig<T> ) {
+export function validateReadConfig<T>( config: Query<T> ) {
 	validateUseDbConfig( {
 		prop: 'query',
 		op: DbOp.r,
