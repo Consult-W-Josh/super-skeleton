@@ -1,3 +1,17 @@
+## 0.6.0 (2024-11-14)
+
+### 🚀 Features
+
+- fixed sonarlint issues
+- added operations action to useDb function
+- completed useDB function
+- completed ssNotifications
+
+### ❤️  Thank You
+
+- emmanuel-ademuyiwa
+- The Enthusiast
+
 ## 0.5.0 (2024-11-01)
 
 ### 🚀 Features
