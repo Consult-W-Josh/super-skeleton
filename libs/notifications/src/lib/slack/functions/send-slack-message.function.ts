@@ -6,6 +6,6 @@ export async function sendSlackMessage(message: string, auth: SlackAuth) {
     const response = await logToSlack(message, auth);
     console.log("Slack message sent successfully:", response);
   } catch (error) {
-    console.error("Failed to send Slack message:", error);
+    console.error("The system failed to send Slack message:", error);
   }
 }

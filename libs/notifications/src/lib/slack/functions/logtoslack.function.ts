@@ -4,7 +4,7 @@ import { callApi } from "../dependencies/call-api.function";
 export async function logToSlack(text: string, auth: SlackAuth, ts?: string) {
   return callApi<SlackPayload, unknown>({
     serviceUri: "https://slack.com",
-    endpoint: {
+    endpoint: { 
       path: "/api/chat.postMessage",
       fullPath: "/api/chat.postMessage",
       method: "POST",
