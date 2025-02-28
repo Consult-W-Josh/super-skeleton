@@ -1,4 +1,3 @@
-import { error } from "console";
 import { makeHttpRequest, Auth, Proxy } from "./make-http-request.function";
 import { notifyClientOfFailure, notifyClientOfSuccess } from "./send-api-response.function";
 import { AxiosError } from "axios";
@@ -45,9 +44,6 @@ export async function callApi<Input, Output, QueryInput = unknown>(
     return notifyClientOfSuccess<Output>(!rawResponse ? response.data : response);
   } catch (e) {
     const axiosError = e as AxiosError;
-    const formattedError = notifyClientOfFailure({
-      error: axiosError,
-    });
     throw new Error()
   }
 }
