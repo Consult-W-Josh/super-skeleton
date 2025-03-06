@@ -1,3 +1,13 @@
+## 0.7.0 (2025-03-06)
+
+### 🚀 Features
+
+- no new changes
+
+### ❤️  Thank You
+
+- The Enthusiast
+
 ## 0.6.0 (2024-11-14)
 
 ### 🚀 Features
