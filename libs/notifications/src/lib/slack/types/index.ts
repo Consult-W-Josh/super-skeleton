@@ -1,1 +1,1 @@
-export * from './slack-payload'
+export * from './slack-payload';

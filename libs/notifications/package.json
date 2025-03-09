@@ -7,7 +7,8 @@
     "sendim-brevo": "^1.2.246",
     "@elasticemail/elasticemail-client-ts-axios": "^4.0.22",
     "@sendgrid/mail": "^8.1.4",
-    "@super-skeleton/utils": "*"
+    "@super-skeleton/utils": "*",
+    "axios": "^1.6.0"
   },
   "publishConfig": {
     "access": "public"

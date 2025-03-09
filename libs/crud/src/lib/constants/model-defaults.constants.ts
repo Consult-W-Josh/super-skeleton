@@ -1,17 +1,17 @@
 import { SchemaDefinition, SchemaDefinitionProperty, Types } from 'mongoose';
-import { SsOrmRepository, SsSchemaFieldTypes } from '../types';
+import { SsOrmRepository } from '../types';
 
-const RequiredString: SchemaDefinitionProperty = {
+export const RequiredString: SchemaDefinitionProperty = {
 	type: String,
 	required: true,
 };
 
-const RequiredObjectId: SchemaDefinitionProperty = {
+export const RequiredObjectId: SchemaDefinitionProperty = {
 	type: Types.ObjectId,
 	required: true,
 };
 
-const RequiredObjectIdWithRef = ( ref: string ): SchemaDefinitionProperty => {
+export const RequiredObjectIdWithRef = ( ref: string ): SchemaDefinitionProperty => {
 	return {
 		type: Types.ObjectId,
 		required: true,
@@ -19,32 +19,32 @@ const RequiredObjectIdWithRef = ( ref: string ): SchemaDefinitionProperty => {
 	};
 };
 
-const ObjectIdWithRef = ( ref: string ): SchemaDefinitionProperty => {
+export const ObjectIdWithRef = ( ref: string ): SchemaDefinitionProperty => {
 	return {
 		type: Types.ObjectId,
 		ref,
 	};
 };
 
-const OptionalSchema = <T>( sch: SchemaDefinition<T> ): SchemaDefinitionProperty => {
+export const OptionalSchema = <T>( sch: SchemaDefinition<T> ): SchemaDefinitionProperty => {
 	return {
 		type: sch,
 		required: false,
 	};
 };
 
-const RequiredSchema = <T>( sch: SchemaDefinition<T> ): SchemaDefinitionProperty => {
+export const RequiredSchema = <T>( sch: SchemaDefinition<T> ): SchemaDefinitionProperty => {
 	return {
 		type: sch,
 	};
 };
 
-const RequiredObjectIdArray: SchemaDefinitionProperty = {
+export const RequiredObjectIdArray: SchemaDefinitionProperty = {
 	type: [Types.ObjectId],
 	required: true,
 };
 
-const RequiredObjectIdArrayWithRef = ( ref: string ): SchemaDefinitionProperty => {
+export const RequiredObjectIdArrayWithRef = ( ref: string ): SchemaDefinitionProperty => {
 	return {
 		type: [Types.ObjectId],
 		required: true,
@@ -52,62 +52,62 @@ const RequiredObjectIdArrayWithRef = ( ref: string ): SchemaDefinitionProperty =
 	};
 };
 
-const ObjectIdArrayWithRef = ( ref: string ): SchemaDefinitionProperty => {
+export const ObjectIdArrayWithRef = ( ref: string ): SchemaDefinitionProperty => {
 	return {
 		type: [Types.ObjectId],
 		ref,
 	};
 };
 
-const RequiredBoolean: SchemaDefinitionProperty<boolean> = {
+export const RequiredBoolean: SchemaDefinitionProperty<boolean> = {
 	type: Boolean,
 	required: true,
 };
 
-const RequiredBooleanDefaultFalse: SchemaDefinitionProperty<boolean> = {
+export const RequiredBooleanDefaultFalse: SchemaDefinitionProperty<boolean> = {
 	type: Boolean,
 	required: true,
 	default: false,
 };
 
-const RequiredBooleanDefaultTrue: SchemaDefinitionProperty<boolean> = {
+export const RequiredBooleanDefaultTrue: SchemaDefinitionProperty<boolean> = {
 	type: Boolean,
 	required: true,
 	default: true,
 };
 
-const RequiredNumber: SchemaDefinitionProperty<number> = {
+export const RequiredNumber: SchemaDefinitionProperty<number> = {
 	type: Number,
 	required: true,
 };
 
-const UniqueRequiredString: SchemaDefinitionProperty = {
+export const UniqueRequiredString: SchemaDefinitionProperty = {
 	type: String,
 	required: true,
 	unique: true,
 };
 
-const RequiredObjectArray: SchemaDefinitionProperty = {
+export const RequiredObjectArray: SchemaDefinitionProperty = {
 	type: [Object],
 	required: true,
 };
 
-const ObjectArray: SchemaDefinitionProperty = {
+export const ObjectArray: SchemaDefinitionProperty = {
 	type: [Object],
 	required: false,
 };
 
-const RequiredObject: SchemaDefinitionProperty = {
+export const RequiredObject: SchemaDefinitionProperty = {
 	type: Object,
 	required: true,
 };
 
-const RequiredDate: SchemaDefinitionProperty = {
+export const RequiredDate: SchemaDefinitionProperty = {
 	type: Date,
 	required: true,
 };
 
-const RequiredEnum = <T>( e ): SchemaDefinitionProperty<T> => {
+export const RequiredEnum = <T>( e ): SchemaDefinitionProperty<T> => {
 	return {
 		type: String,
 		enum: Object.values( e ),
@@ -115,7 +115,7 @@ const RequiredEnum = <T>( e ): SchemaDefinitionProperty<T> => {
 	} as unknown as SchemaDefinitionProperty<T>;
 };
 
-const RequiredStringWithDefault = <T>(
+export const RequiredStringWithDefault = <T>(
 	defaultValue: string,
 	extras?: Partial<SchemaDefinitionProperty<T>>
 ): SchemaDefinitionProperty<T> => {

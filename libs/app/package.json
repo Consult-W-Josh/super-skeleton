@@ -2,7 +2,11 @@
   "name": "@super-skeleton/app",
   "version": "0.0.1",
   "dependencies": {
-    "tslib": "^2.3.0"
+    "tslib": "^2.3.0",
+    "express": "4.21.1",
+    "axios": "^1.6.0",
+    "cors": "^2.8.5",
+    "@super-skeleton/crud": "0.0.1"
   },
   "devDependencies": {},
   "publishConfig": {

@@ -3,7 +3,7 @@ export interface SlackAuth {
     authToken: string;
   }
   
-  export interface SlackMessageSection {
+export interface SlackMessageSection {
     type: "section";
     text: {
       type: "mrkdwn";
@@ -11,7 +11,7 @@ export interface SlackAuth {
     };
   }
   
-  export interface SlackPayload {
+export interface SlackPayload {
     channel: string;
     blocks: Array<SlackMessageSection>;
     thread_ts?: string;

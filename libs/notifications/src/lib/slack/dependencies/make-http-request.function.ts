@@ -21,16 +21,16 @@ export type MakeHttpRequestParams = {
   proxy?: Proxy;
 };
 
-export async function makeHttpRequest(params: MakeHttpRequestParams): Promise<AxiosResponse> {
-  const config: AxiosRequestConfig = {
-    method: params.method,
-    url: params.url,
-    headers: params.headers as Record<string, string>,
-    data: params.body,
-    params: params.query,
-    auth: params.auth,
-    proxy: params.proxy,
-  };
+export async function makeHttpRequest( params: MakeHttpRequestParams ): Promise<AxiosResponse> {
+	const config: AxiosRequestConfig = {
+		method: params.method,
+		url: params.url,
+		headers: params.headers as Record<string, string>,
+		data: params.body,
+		params: params.query,
+		auth: params.auth,
+		proxy: params.proxy,
+	};
 
-  return axios(config);
+	return axios( config );
 }
