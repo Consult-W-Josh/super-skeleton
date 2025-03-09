@@ -1,3 +1,13 @@
+## 0.9.0 (2025-03-09)
+
+### 🚀 Features
+
+- exported direct mongoose functions
+
+### ❤️  Thank You
+
+- The Enthusiast
+
 ## 0.8.0 (2025-03-09)
 
 ### 🚀 Features
