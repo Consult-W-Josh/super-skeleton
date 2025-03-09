@@ -27,7 +27,8 @@ export enum SsSchemaFieldTypes {
     OptionalStringArray = "OptionalStringArray",
     RequiredNumberWithDefault = "RequiredNumberWithDefault",
     RequiredEnumWithDefault = "RequiredEnumWithDefault",
-    OptionalNumber = "OptionalNumber"
+    OptionalNumber = "OptionalNumber",
+    OptionalDate = "OptionalDate"
 }
 
 export type SsSchema<T> = {

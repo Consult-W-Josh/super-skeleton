@@ -112,6 +112,11 @@ export const RequiredDate: SchemaDefinitionProperty = {
 	required: true,
 };
 
+export const OptionalDate: SchemaDefinitionProperty = {
+	type: Date,
+	required: false,
+};
+
 export const RequiredEnum = <T>( e ): SchemaDefinitionProperty<T> => {
 	return {
 		type: String,
@@ -194,6 +199,7 @@ export const md: SsOrmRepository<SchemaDefinitionProperty> & {
 	ObjectArray,
 	RequiredObject,
 	RequiredDate,
+	OptionalDate,
 	RequiredEnum,
 	OptionalEnum,
 	RequiredStringWithDefault,
