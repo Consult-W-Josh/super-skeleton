@@ -162,7 +162,19 @@ export const RequiredEnumWithDefault = <T>( e, defaultValue: string ): SchemaDef
 	} as unknown as SchemaDefinitionProperty<T>;
 };
 
-export const md: SsOrmRepository<SchemaDefinitionProperty> = {
+export const md: SsOrmRepository<SchemaDefinitionProperty> & {
+	OptionalEnum: typeof OptionalEnum;
+	RequiredEnum: typeof RequiredEnum;
+	RequiredEnumWithDefault: typeof RequiredEnumWithDefault;
+	RequiredObjectIdWithRef: typeof RequiredObjectIdWithRef;
+	ObjectIdWithRef: typeof ObjectIdWithRef;
+	OptionalSchema: typeof OptionalSchema;
+	RequiredSchema: typeof RequiredSchema;
+	RequiredObjectIdArrayWithRef: typeof RequiredObjectIdArrayWithRef;
+	ObjectIdArrayWithRef: typeof ObjectIdArrayWithRef;
+	RequiredStringWithDefault: typeof RequiredStringWithDefault;
+	RequiredNumberWithDefault: typeof RequiredNumberWithDefault;
+} = {
 	RequiredString,
 	RequiredObjectId,
 	RequiredObjectIdWithRef,
