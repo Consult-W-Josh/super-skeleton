@@ -1,3 +1,13 @@
+## 0.11.0 (2025-03-09)
+
+### 🚀 Features
+
+- made md functions callable
+
+### ❤️  Thank You
+
+- The Enthusiast
+
 ## 0.10.0 (2025-03-09)
 
 ### 🚀 Features
