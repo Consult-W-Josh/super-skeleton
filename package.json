@@ -5,7 +5,8 @@
   "scripts": {
     "serve": "nx run-many --target=serve --all --parallel=7",
     "glib": "node ./ss-cli/generate-lib.js",
-    "lint": "nx run-many --target=lint --all"
+    "lint": "nx run-many --target=lint --all",
+    "release": "nx release -y"
   },
   "private": true,
   "dependencies": {

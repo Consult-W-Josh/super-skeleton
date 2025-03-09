@@ -81,6 +81,11 @@ export const RequiredNumber: SchemaDefinitionProperty<number> = {
 	required: true,
 };
 
+export const OptionalNumber: SchemaDefinitionProperty<number> = {
+	type: Number,
+	required: false,
+};
+
 export const UniqueRequiredString: SchemaDefinitionProperty = {
 	type: String,
 	required: true,
@@ -115,6 +120,14 @@ export const RequiredEnum = <T>( e ): SchemaDefinitionProperty<T> => {
 	} as unknown as SchemaDefinitionProperty<T>;
 };
 
+export const OptionalEnum = <T>( e ): SchemaDefinitionProperty<T> => {
+	return {
+		type: String,
+		enum: Object.values( e ),
+		required: false,
+	} as unknown as SchemaDefinitionProperty<T>;
+};
+
 export const RequiredStringWithDefault = <T>(
 	defaultValue: string,
 	extras?: Partial<SchemaDefinitionProperty<T>>
@@ -124,6 +137,28 @@ export const RequiredStringWithDefault = <T>(
 		required: true,
 		default: defaultValue,
 		...extras
+	} as unknown as SchemaDefinitionProperty<T>;
+};
+
+export const OptionalStringArray: SchemaDefinitionProperty = {
+	type: [String],
+	required: false
+};
+
+export const RequiredNumberWithDefault = ( defaultValue: number ): SchemaDefinitionProperty<number> => {
+	return {
+		type: Number,
+		required: true,
+		default: defaultValue
+	};
+};
+
+export const RequiredEnumWithDefault = <T>( e, defaultValue: string ): SchemaDefinitionProperty<T> => {
+	return {
+		type: String,
+		enum: Object.values( e ),
+		required: true,
+		default: defaultValue
 	} as unknown as SchemaDefinitionProperty<T>;
 };
 
@@ -141,11 +176,16 @@ export const md: SsOrmRepository<SchemaDefinitionProperty> = {
 	RequiredBooleanDefaultFalse,
 	RequiredBooleanDefaultTrue,
 	RequiredNumber,
+	OptionalNumber,
 	UniqueRequiredString,
 	RequiredObjectArray,
 	ObjectArray,
 	RequiredObject,
 	RequiredDate,
 	RequiredEnum,
-	RequiredStringWithDefault
+	OptionalEnum,
+	RequiredStringWithDefault,
+	OptionalStringArray,
+	RequiredNumberWithDefault,
+	RequiredEnumWithDefault
 };

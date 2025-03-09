@@ -22,7 +22,12 @@ export enum SsSchemaFieldTypes {
     RequiredObject = "RequiredObject",
     RequiredDate = "RequiredDate",
     RequiredEnum = "RequiredEnum",
-    RequiredStringWithDefault = "RequiredStringWithDefault"
+    OptionalEnum = "OptionalEnum",
+    RequiredStringWithDefault = "RequiredStringWithDefault",
+    OptionalStringArray = "OptionalStringArray",
+    RequiredNumberWithDefault = "RequiredNumberWithDefault",
+    RequiredEnumWithDefault = "RequiredEnumWithDefault",
+    OptionalNumber = "OptionalNumber"
 }
 
 export type SsSchema<T> = {
