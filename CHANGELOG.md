@@ -1,3 +1,13 @@
+## 0.8.0 (2025-03-09)
+
+### 🚀 Features
+
+- exported model definition constants and functions
+
+### ❤️  Thank You
+
+- The Enthusiast
+
 ## 0.7.0 (2025-03-06)
 
 ### 🚀 Features
