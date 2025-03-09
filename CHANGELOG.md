@@ -1,3 +1,13 @@
+## 0.10.0 (2025-03-09)
+
+### 🚀 Features
+
+- added more db types
+
+### ❤️  Thank You
+
+- The Enthusiast
+
 ## 0.9.0 (2025-03-09)
 
 ### 🚀 Features
