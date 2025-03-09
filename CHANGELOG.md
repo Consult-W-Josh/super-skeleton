@@ -1,3 +1,13 @@
+## 0.12.0 (2025-03-09)
+
+### 🚀 Features
+
+- added optional date
+
+### ❤️  Thank You
+
+- The Enthusiast
+
 ## 0.11.0 (2025-03-09)
 
 ### 🚀 Features
