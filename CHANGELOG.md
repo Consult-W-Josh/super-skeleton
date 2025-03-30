@@ -1,3 +1,13 @@
+## 0.13.0 (2025-03-30)
+
+### 🚀 Features
+
+- adjusted slack message
+
+### ❤️  Thank You
+
+- The Enthusiast
+
 ## 0.12.0 (2025-03-09)
 
 ### 🚀 Features
