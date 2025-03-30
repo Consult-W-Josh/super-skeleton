@@ -32,7 +32,10 @@ export enum SsSchemaFieldTypes {
 }
 
 export type SsSchema<T> = {
-    [k in keyof T]: SsSchemaFieldTypes
+    [k in keyof T]: {
+        type: SsSchemaFieldTypes,
+        extend?: unknown 
+    }
 }
 
 export type SsModel<T> = {
