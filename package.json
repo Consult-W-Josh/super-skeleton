@@ -12,6 +12,7 @@
   "dependencies": {
     "@elasticemail/elasticemail-client-ts-axios": "^4.0.22",
     "@sendgrid/mail": "^8.1.4",
+    "argon2": "^0.43.0",
     "axios": "^1.6.0",
     "cors": "^2.8.5",
     "express": "4.21.1",

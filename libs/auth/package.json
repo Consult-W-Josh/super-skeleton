@@ -3,10 +3,14 @@
   "version": "0.0.1",
   "dependencies": {
     "tslib": "^2.3.0",
-    "@super-skeleton/crud": "0.0.1",
-    "zod": "^3.23.8"
+    "@super-skeleton/crud": "^0.13.0",
+    "zod": "^3.23.8",
+    "argon2": "^0.43.0",
+    "jsonwebtoken": "^9.0.2"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.6"
+  },
   "publishConfig": {
     "access": "public"
   }
