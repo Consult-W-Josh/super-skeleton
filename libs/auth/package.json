@@ -6,7 +6,8 @@
     "@super-skeleton/crud": "*",
     "zod": "^3.23.8",
     "argon2": "^0.43.0",
-    "jsonwebtoken": "^9.0.2"
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.0.0"
   },
   "devDependencies": {
     "@types/jsonwebtoken": "^9.0.6"

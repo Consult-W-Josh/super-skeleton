@@ -1,7 +1,7 @@
 import * as argon2 from 'argon2';
 import { DbOp, ssCrud, SsModel } from '@super-skeleton/crud';
 import { IUser, UserRegistrationInput } from '../../user';
-import { BaseEventEmitterService } from '../../base/base-event-emitter.service';
+import { BaseEventEmitterService } from '../../base';
 
 async function checkIfUserExistsByEmail(
 	email: string,

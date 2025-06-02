@@ -1,6 +1,6 @@
 import { Types } from 'mongoose';
 import { SsModel, SsOrms, SsSchema, SsSchemaFieldTypes } from '@super-skeleton/crud';
-import { ModelNames } from '../constants/model-names.constants';
+import { ModelNames } from '../constants';
 
 export interface IUser {
   _id?: Types.ObjectId | string;

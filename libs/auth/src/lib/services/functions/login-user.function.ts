@@ -2,7 +2,7 @@ import * as argon2 from 'argon2';
 import * as jwt from 'jsonwebtoken';
 import { IUser, UserLoginInput } from '../../user';
 import { DbOp, ssCrud, SsModel } from '@super-skeleton/crud';
-import { BaseEventEmitterService } from '../../base/base-event-emitter.service';
+import { BaseEventEmitterService } from '../../base';
 
 async function findUserByEmailOrUsername(
 	emailOrUsername: string,

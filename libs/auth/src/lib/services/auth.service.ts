@@ -1,6 +1,6 @@
 import { executeLoginUser, executeRegisterUser } from './functions';
 import { SsModel } from '@super-skeleton/crud';
-import { BaseEventEmitterService } from '../base/base-event-emitter.service';
+import { BaseEventEmitterService } from '../base';
 import {
 	IUser,
 	UserLoginInput,
@@ -14,7 +14,7 @@ interface AuthServiceOptions {
   eventEmitter?: BaseEventEmitterService;
   accessTokenExpiry?: string;
   refreshTokenExpiry?: string;
-  userModel?: SsModel<IUser>; // Optional userModel for flexibility
+  userModel?: SsModel<IUser>;
 }
 
 export class AuthService extends BaseEventEmitterService {
@@ -30,7 +30,7 @@ export class AuthService extends BaseEventEmitterService {
 		this.refreshJwtSecret = options.refreshJwtSecret;
 		this.accessTokenExpiry = options.accessTokenExpiry || '15m';
 		this.refreshTokenExpiry = options.refreshTokenExpiry || '7d';
-		this.userModel = options.userModel || UserModel; // Use provided UserModel or default
+		this.userModel = options.userModel || UserModel;
 	}
 
 	public async registerUser( data: UserRegistrationInput ): Promise<IUser> {
