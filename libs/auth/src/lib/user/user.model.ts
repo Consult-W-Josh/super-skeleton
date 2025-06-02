@@ -1,5 +1,6 @@
 import { Types } from 'mongoose';
 import { SsModel, SsOrms, SsSchema, SsSchemaFieldTypes } from '@super-skeleton/crud';
+import { ModelNames } from '../constants/model-names.constants';
 
 export interface IUser {
   _id?: Types.ObjectId | string;
@@ -96,7 +97,7 @@ export const userSsSchema: SsSchema<IUser> = {
 };
 
 export const UserModel: SsModel<IUser> = {
-	name: 'User',
+	name: ModelNames.USER,
 	schema: userSsSchema,
 	orm: SsOrms.mongoose
 };
