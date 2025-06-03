@@ -1,3 +1,3 @@
 export const ModelNames = {
-	USER: 'User',
+	USER: 'users',
 } as const;

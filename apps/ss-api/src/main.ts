@@ -1,16 +1,29 @@
-import { constructSuperSkeletonExpressApp } from '@super-skeleton/app';
+import { constructSuperSkeletonExpressApp as constructApp } from '@super-skeleton/app';
+import { initializeAuthModule } from '@super-skeleton/auth';
 import { secrets } from './environment';
+import { validateRequiredSecrets } from './app/utils/validate-env.util';
+import { configureAuthModuleOptions } from './app/utils/configure-auth-module.util';
 
-const port = 4212;
+async function bootstrap() {
+	validateRequiredSecrets( secrets );
 
-const app = constructSuperSkeletonExpressApp( {
-	mongoDbUrl: secrets.mongoDbUrl
-} );
+	const app = constructApp( {
+		mongoDbUrl: secrets.mongoDbUrl
+	} );
 
-app.get( '/', ( req, res ) => {
-	res.send( { message: 'Hello API' } );
-} );
+	const authModuleOptions = configureAuthModuleOptions( secrets );
+	const authRouter = initializeAuthModule( authModuleOptions );
+	app.use( '/auth', authRouter );
 
-app.listen( port, () => {
-	console.log( `[ ready ]: ${port}` );
-} );
+	app.get( '/', ( req, res ) => {
+		res.send( { message: 'Hello API' } );
+	} );
+
+	const port = process.env.PORT || 4212;
+	const server = app.listen( port, () => {
+		console.log( `🚀 Application is running on: http://localhost:${port}` );
+	} );
+	server.on( 'error', console.error );
+}
+
+bootstrap();
