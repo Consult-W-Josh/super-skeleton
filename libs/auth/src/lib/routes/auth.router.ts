@@ -1,7 +1,8 @@
 import { Router } from 'express';
 import {
 	createLoginController,
-	createSignupController
+	createSignupController,
+	createVerifyEmailController
 } from '../controllers';
 import { validateRequestParts } from '../utils';
 import { userLoginZodSchema, userRegistrationZodSchema } from '../user';
@@ -12,6 +13,7 @@ export function createAuthRouter( authService: AuthService ): Router {
 
 	const signupController = createSignupController( authService );
 	const loginController = createLoginController( authService );
+	const verifyEmailController = createVerifyEmailController( authService );
 
 	router.post(
 		'/signup',
@@ -25,9 +27,10 @@ export function createAuthRouter( authService: AuthService ): Router {
 		loginController
 	);
 
+	router.get( '/verify-email/:token', verifyEmailController );
+
 	// Future routes:
 	// router.post('/logout', ...);
-	// router.get('/verify-email/:token', ...);
 	// router.post('/forgot-password', ...);
 	// router.post('/reset-password/:token', ...);
 	// router.get('/me', ...); // Example: Get current user

@@ -1,4 +1,5 @@
 import * as argon2 from 'argon2';
+import * as crypto from 'crypto';
 import { DbOp, ssCrud, SsModel } from '@super-skeleton/crud';
 import { IUser, UserRegistrationInput } from '../../user';
 import { BaseEventEmitterService } from '../../base';
@@ -43,8 +44,8 @@ async function createNewUserRecord(
 	return createdUser;
 }
 
-function generateVerificationTokenPlaceholder( email: string ): string {
-	return 'TODO:generate_secure_token_for_' + email;
+function generateEmailVerificationToken(): string {
+	return crypto.randomBytes( 32 ).toString( 'hex' );
 }
 
 interface ExecuteRegisterUserParams {
@@ -58,12 +59,20 @@ export async function executeRegisterUser( {
 	userModel,
 	eventEmitter
 }: ExecuteRegisterUserParams ): Promise<IUser> {
+	console.log(
+		'[executeRegisterUser] Received data:',
+		JSON.stringify( data, null, 2 )
+	);
 	const existingUser = await checkIfUserExistsByEmail( data.email, userModel );
 	if ( existingUser ) {
 		throw new Error( 'EMAIL_ALREADY_EXISTS' );
 	}
 
 	const passwordHash = await hashUserPassword( data.password );
+	const emailVerificationToken = generateEmailVerificationToken();
+	const emailVerificationTokenExpiresAt = new Date(
+		Date.now() + 24 * 60 * 60 * 1000
+	); // 24 hours from now
 
 	const newUserPartial: Partial<IUser> = {
 		email: data.email.toLowerCase(),
@@ -72,17 +81,15 @@ export async function executeRegisterUser( {
 		firstName: data.firstName,
 		lastName: data.lastName,
 		isEmailVerified: false,
+		emailVerificationToken,
+		emailVerificationTokenExpiresAt,
 		isAccountLocked: false,
 		failedLoginAttempts: 0
 	};
 
 	const createdUser = await createNewUserRecord( newUserPartial, userModel );
 
-	const verificationToken = generateVerificationTokenPlaceholder(
-		createdUser.email
-	);
-
-	eventEmitter.emit( 'userRegistered', createdUser, verificationToken );
+	eventEmitter.emit( 'userRegistered', createdUser, emailVerificationToken );
 
 	return createdUser;
 }

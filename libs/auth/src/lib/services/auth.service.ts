@@ -1,4 +1,8 @@
-import { executeLoginUser, executeRegisterUser } from './functions';
+import {
+	executeEmailVerification,
+	executeLoginUser,
+	executeRegisterUser
+} from './functions';
 import { SsModel } from '@super-skeleton/crud';
 import { BaseEventEmitterService } from '../base';
 import {
@@ -61,6 +65,13 @@ export class AuthService extends BaseEventEmitterService {
 			accessTokenExpiry: this.accessTokenExpiry,
 			refreshTokenExpiry: this.refreshTokenExpiry,
 			requireEmailVerificationForLogin: this.requireEmailVerificationForLogin
+		} );
+	}
+
+	public async verifyUserEmail( token: string ): Promise<boolean> {
+		return executeEmailVerification( {
+			token,
+			userModel: this.userModel
 		} );
 	}
 }

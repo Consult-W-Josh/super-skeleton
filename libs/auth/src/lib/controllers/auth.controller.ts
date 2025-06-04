@@ -46,3 +46,31 @@ export function createLoginController( authService: AuthService ) {
 		}
 	};
 }
+
+export function createVerifyEmailController( authService: AuthService ) {
+	return async ( req: Request, res: Response, next: NextFunction ) => {
+		try {
+			const { token } = req.params;
+			if ( !token ) {
+				return res
+					.status( 400 )
+					.json( { message: 'Verification token is missing.' } );
+			}
+
+			const success = await authService.verifyUserEmail( token );
+
+			if ( success ) {
+				return res
+					.status( 200 )
+					.json( { message: 'Email verified successfully.' } );
+			} else {
+				return res.status( 400 ).json( {
+					message:
+            'Email verification failed. The token may be invalid or expired.'
+				} );
+			}
+		} catch ( error ) {
+			next( error );
+		}
+	};
+}
