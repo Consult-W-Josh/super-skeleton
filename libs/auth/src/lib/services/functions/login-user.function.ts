@@ -4,24 +4,40 @@ import { IUser, UserLoginInput } from '../../user';
 import { DbOp, ssCrud, SsModel } from '@super-skeleton/crud';
 import { BaseEventEmitterService } from '../../base';
 
+const MAX_FAILED_LOGIN_ATTEMPTS = 5; // Define the threshold for account locking
+
 async function findUserByEmailOrUsername(
 	emailOrUsername: string,
 	userModel: SsModel<IUser>
 ): Promise<IUser | null> {
+	const processedInput = emailOrUsername.toLowerCase();
+
+	const query = {
+		$or: [{ email: processedInput }, { username: processedInput }]
+	};
+
 	return ssCrud.useDb<IUser | null, DbOp.r>( {
 		op: DbOp.r,
 		model: userModel,
 		config: {
-			query: { email: emailOrUsername.toLowerCase() }
+			query
 		}
 	} );
 }
 
-function checkUserAccountStatus( user: IUser ): void {
+function checkUserAccountStatus(
+	user: IUser,
+	requireEmailVerificationForLogin?: boolean
+): void {
 	if ( user.isAccountLocked ) {
 		throw new Error( 'ACCOUNT_LOCKED' );
 	}
-	if ( !user.isEmailVerified ) {
+
+	if (
+		( requireEmailVerificationForLogin === undefined ||
+      requireEmailVerificationForLogin === true ) &&
+    !user.isEmailVerified
+	) {
 		throw new Error( 'EMAIL_NOT_VERIFIED' );
 	}
 }
@@ -38,13 +54,23 @@ async function handleFailedLoginAttempt(
 	userModel: SsModel<IUser>
 ): Promise<void> {
 	const updatedFailedAttempts = ( user.failedLoginAttempts || 0 ) + 1;
-	// TODO: (Future task: Lock account after N attempts)
+
+	const updates: Partial<IUser> = {
+		failedLoginAttempts: updatedFailedAttempts
+	};
+
+	if ( updatedFailedAttempts >= MAX_FAILED_LOGIN_ATTEMPTS ) {
+		updates.isAccountLocked = true;
+		// TODO: Emit an event here if an account gets locked
+		// eventEmitter.emit('userAccountLocked', { userId: user._id });
+	}
+
 	await ssCrud.useDb<IUser, DbOp.u>( {
 		op: DbOp.u,
 		model: userModel,
 		config: {
 			query: { _id: user._id },
-			data: { failedLoginAttempts: updatedFailedAttempts }
+			data: updates // Use the determined updates
 		}
 	} );
 }
@@ -110,6 +136,7 @@ interface ExecuteLoginUserParams {
   refreshJwtSecret: string;
   accessTokenExpiry: string;
   refreshTokenExpiry: string;
+  requireEmailVerificationForLogin?: boolean;
 }
 
 export async function executeLoginUser( {
@@ -119,7 +146,8 @@ export async function executeLoginUser( {
 	jwtSecret,
 	refreshJwtSecret,
 	accessTokenExpiry,
-	refreshTokenExpiry
+	refreshTokenExpiry,
+	requireEmailVerificationForLogin
 }: ExecuteLoginUserParams ): Promise<{
   accessToken: string;
   refreshToken: string;
@@ -134,7 +162,7 @@ export async function executeLoginUser( {
 		throw new Error( 'INVALID_CREDENTIALS' );
 	}
 
-	checkUserAccountStatus( foundUser );
+	checkUserAccountStatus( foundUser, requireEmailVerificationForLogin );
 
 	const isPasswordValid = await verifyUserPassword(
 		foundUser.passwordHash,

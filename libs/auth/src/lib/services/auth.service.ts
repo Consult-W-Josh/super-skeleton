@@ -15,6 +15,7 @@ interface AuthServiceOptions {
   accessTokenExpiry?: string;
   refreshTokenExpiry?: string;
   userModel?: SsModel<IUser>;
+  requireEmailVerificationForLogin?: boolean;
 }
 
 export class AuthService extends BaseEventEmitterService {
@@ -23,6 +24,7 @@ export class AuthService extends BaseEventEmitterService {
 	private readonly accessTokenExpiry: string;
 	private readonly refreshTokenExpiry: string;
 	private readonly userModel: SsModel<IUser>;
+	private readonly requireEmailVerificationForLogin: boolean;
 
 	constructor( options: AuthServiceOptions ) {
 		super();
@@ -31,6 +33,10 @@ export class AuthService extends BaseEventEmitterService {
 		this.accessTokenExpiry = options.accessTokenExpiry || '15m';
 		this.refreshTokenExpiry = options.refreshTokenExpiry || '7d';
 		this.userModel = options.userModel || UserModel;
+		this.requireEmailVerificationForLogin =
+      options.requireEmailVerificationForLogin === undefined
+      	? true
+      	: options.requireEmailVerificationForLogin;
 	}
 
 	public async registerUser( data: UserRegistrationInput ): Promise<IUser> {
@@ -53,7 +59,8 @@ export class AuthService extends BaseEventEmitterService {
 			jwtSecret: this.jwtSecret,
 			refreshJwtSecret: this.refreshJwtSecret,
 			accessTokenExpiry: this.accessTokenExpiry,
-			refreshTokenExpiry: this.refreshTokenExpiry
+			refreshTokenExpiry: this.refreshTokenExpiry,
+			requireEmailVerificationForLogin: this.requireEmailVerificationForLogin
 		} );
 	}
 }

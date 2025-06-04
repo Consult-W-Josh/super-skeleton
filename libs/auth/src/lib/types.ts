@@ -47,6 +47,11 @@ export interface AuthModuleOptions {
       details: { method: string }
     ) => void | Promise<void>;
   };
+  /**
+   * If true, users must have their email verified to log in.
+   * @default true
+   */
+  requireEmailVerificationForLogin?: boolean;
 }
 
 /**

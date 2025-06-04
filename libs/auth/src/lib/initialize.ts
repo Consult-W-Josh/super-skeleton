@@ -16,7 +16,8 @@ export function initializeAuthModule( options: AuthModuleOptions ): Router {
 		refreshJwtSecret: options.refreshJwtSecret,
 		accessTokenExpiry: options.accessTokenExpiry,
 		refreshTokenExpiry: options.refreshTokenExpiry,
-		userModel: options.userModel
+		userModel: options.userModel,
+		requireEmailVerificationForLogin: options.requireEmailVerificationForLogin
 	} );
 
 	// Register Hooks

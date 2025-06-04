@@ -21,6 +21,7 @@ export function configureAuthModuleOptions(
 					`[Auth Hook - User Login]: User ${user.email} logged in via ${details.method}.`
 				);
 			}
-		}
+		},
+		requireEmailVerificationForLogin: appSecrets.requireEmailVerificationForLogin
 	};
 }
