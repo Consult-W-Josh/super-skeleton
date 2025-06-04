@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { z, ZodSchema } from 'zod';
 
 interface RequestValidationSchemas {
@@ -25,6 +25,7 @@ export function validateRequestParts( schemas: RequestValidationSchemas ) {
 				return res.status( 400 ).json( {
 					message: 'Validation failed',
 					errors: error.errors,
+					issues: error.issues
 				} );
 			}
 			next( error );

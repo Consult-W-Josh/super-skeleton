@@ -43,8 +43,6 @@ async function createNewUserRecord(
 	return createdUser;
 }
 
-// Placeholder for actual token generation logic if needed by register flow directly
-// For now, it's just a string for the event.
 function generateVerificationTokenPlaceholder( email: string ): string {
 	return 'TODO:generate_secure_token_for_' + email;
 }
@@ -52,7 +50,7 @@ function generateVerificationTokenPlaceholder( email: string ): string {
 interface ExecuteRegisterUserParams {
   data: UserRegistrationInput;
   userModel: SsModel<IUser>;
-  eventEmitter: BaseEventEmitterService; // Or direct EventEmitter if preferred
+  eventEmitter: BaseEventEmitterService;
 }
 
 export async function executeRegisterUser( {

@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 export const userRegistrationZodSchema = z.object( {
-	email: z.string().email().toLowerCase().trim(),
+	email: z.string().email().toLowerCase().trim().min( 1 ),
 	username: z.string()
 		.min( 3 )
 		.max( 30 )

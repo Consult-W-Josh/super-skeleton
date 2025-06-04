@@ -6,7 +6,7 @@ export async function findRecord<T>( {
 }: {
   model: Model<T>;
   query: FilterQuery<T>;
-} ): Promise<T> {
-	const result = await model.findOne( query );
-	return result.toObject();
+} ): Promise<T | null> {
+	const result = await model.findOne( query ).exec();
+	return result ? result.toObject() : null;
 }
