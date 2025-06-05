@@ -137,9 +137,9 @@ export function configureAuthModuleOptions(
 					);
 				}
 			},
-			onUserLogin: ( user, details ) => {
+			onUserLogin: ( user: AuthHookUser, details: { method: string } ) => {
 				console.log(
-					`[Auth Hook - User Login]: User ${user.email} logged in via ${details.method}.`
+					`[Auth Hook - User Login]: User ${user.email} (ID: ${user._id}) logged in via ${details.method}.`
 				);
 			},
 			onPasswordResetRequested: async (
