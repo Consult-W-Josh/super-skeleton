@@ -59,10 +59,6 @@ export async function executeRegisterUser( {
 	userModel,
 	eventEmitter
 }: ExecuteRegisterUserParams ): Promise<IUser> {
-	console.log(
-		'[executeRegisterUser] Received data:',
-		JSON.stringify( data, null, 2 )
-	);
 	const existingUser = await checkIfUserExistsByEmail( data.email, userModel );
 	if ( existingUser ) {
 		throw new Error( 'EMAIL_ALREADY_EXISTS' );
