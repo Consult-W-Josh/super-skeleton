@@ -46,6 +46,22 @@ export interface AuthModuleOptions {
       user: AuthHookUser,
       details: { method: string }
     ) => void | Promise<void>;
+    /**
+     * Called after a password reset has been successfully requested for a user.
+     * @param user Basic information about the user.
+     * @param passwordResetToken The token generated for resetting the password.
+     */
+    onPasswordResetRequested?: (
+      user: AuthHookUser,
+      passwordResetToken: string // The raw token
+    ) => void | Promise<void>;
+    /**
+     * Called after a user's password has been successfully reset.
+     * @param user Basic information about the user whose password was reset.
+     */
+    onPasswordResetCompleted?: (
+      user: AuthHookUser
+    ) => void | Promise<void>;
   };
   /**
    * If true, users must have their email verified to log in.

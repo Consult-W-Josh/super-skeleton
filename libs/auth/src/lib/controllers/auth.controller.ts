@@ -1,6 +1,11 @@
 import { NextFunction, Request, Response } from 'express';
 import { AuthService } from '../services';
-import { UserLoginInput, UserRegistrationInput } from '../user';
+import {
+	ForgotPasswordInput,
+	ResetPasswordInput,
+	UserLoginInput,
+	UserRegistrationInput
+} from '../user';
 
 export function createSignupController( authService: AuthService ) {
 	return async ( req: Request, res: Response, next: NextFunction ) => {
@@ -20,6 +25,50 @@ export function createSignupController( authService: AuthService ) {
 				}
 			}
 			next( error );
+		}
+	};
+}
+
+export function createResetPasswordController( authService: AuthService ) {
+	return async ( req: Request, res: Response, next: NextFunction ) => {
+		try {
+			await authService.resetPassword( req.body as ResetPasswordInput );
+			res
+				.status( 200 )
+				.json( { message: 'Password has been reset successfully.' } );
+		} catch ( error ) {
+			if ( error instanceof Error ) {
+				switch ( error.message ) {
+				case 'INVALID_OR_EXPIRED_TOKEN':
+					return res.status( 400 ).json( { message: error.message } );
+				case 'PASSWORD_RESET_FAILED':
+					console.error( '[ResetPasswordController] Internal error: ', error );
+					return res.status( 500 ).json( {
+						message:
+                'An unexpected error occurred while resetting your password.'
+					} );
+				}
+			}
+			next( error );
+		}
+	};
+}
+
+export function createForgotPasswordController( authService: AuthService ) {
+	return async ( req: Request, res: Response, next: NextFunction ) => {
+		try {
+			await authService.requestPasswordReset( req.body as ForgotPasswordInput );
+			// Returning a generic message to prevent email enumeration
+			res.status( 200 ).json( {
+				message:
+          'If an account with that email exists, a password reset link has been sent.'
+			} );
+		} catch ( error ) {
+			console.error( '[ForgotPasswordController] Error: ', error );
+			res.status( 200 ).json( {
+				message:
+          'If an account with that email exists, a password reset link has been sent.'
+			} );
 		}
 	};
 }

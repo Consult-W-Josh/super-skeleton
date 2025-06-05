@@ -1,12 +1,16 @@
 import {
 	executeEmailVerification,
 	executeLoginUser,
-	executeRegisterUser
+	executeRegisterUser,
+	executeRequestPasswordReset,
+	executeResetPassword
 } from './functions';
 import { SsModel } from '@super-skeleton/crud';
 import { BaseEventEmitterService } from '../base';
 import {
+	ForgotPasswordInput,
 	IUser,
+	ResetPasswordInput,
 	UserLoginInput,
 	UserModel,
 	UserRegistrationInput
@@ -72,6 +76,22 @@ export class AuthService extends BaseEventEmitterService {
 		return executeEmailVerification( {
 			token,
 			userModel: this.userModel
+		} );
+	}
+
+	public async requestPasswordReset( data: ForgotPasswordInput ): Promise<void> {
+		return executeRequestPasswordReset( {
+			data,
+			userModel: this.userModel,
+			eventEmitter: this
+		} );
+	}
+
+	public async resetPassword( data: ResetPasswordInput ): Promise<void> {
+		return executeResetPassword( {
+			data,
+			userModel: this.userModel,
+			eventEmitter: this
 		} );
 	}
 }

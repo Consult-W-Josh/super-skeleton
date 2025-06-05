@@ -52,5 +52,35 @@ export function initializeAuthModule( options: AuthModuleOptions ): Router {
 		);
 	}
 
+	if ( options.hooks?.onPasswordResetRequested ) {
+		authService.on(
+			'passwordResetRequested',
+			async ( user: IUser, passwordResetToken: string ) => {
+				const hookUser: AuthHookUser = {
+					_id: user._id!,
+					email: user.email,
+					firstName: user.firstName,
+					lastName: user.lastName
+				};
+				await options.hooks!.onPasswordResetRequested!( hookUser, passwordResetToken );
+			}
+		);
+	}
+
+	if ( options.hooks?.onPasswordResetCompleted ) {
+		authService.on(
+			'passwordResetCompleted',
+			async ( user: IUser ) => {
+				const hookUser: AuthHookUser = {
+					_id: user._id!,
+					email: user.email,
+					firstName: user.firstName,
+					lastName: user.lastName
+				};
+				await options.hooks!.onPasswordResetCompleted!( hookUser );
+			}
+		);
+	}
+
 	return createAuthRouter( authService );
 }

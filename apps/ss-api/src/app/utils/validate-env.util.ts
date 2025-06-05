@@ -25,6 +25,12 @@ export function validateRequiredSecrets( appSecrets: Secrets ): void {
 			);
 			process.exit( 1 );
 		}
+		if ( !appSecrets.frontendAppUrl ) {
+			console.error(
+				'FATAL ERROR: EMAIL_PROVIDER is set, but FRONTEND_APP_URL is not defined (needed for password reset links).'
+			);
+			process.exit( 1 );
+		}
 
 		switch ( appSecrets.emailProvider ) {
 		case EmailProvider.sendgrid:
@@ -38,7 +44,7 @@ export function validateRequiredSecrets( appSecrets: Secrets ): void {
 		case EmailProvider.mailgun:
 			if ( !appSecrets.mailgunApiKey || !appSecrets.mailgunDomain ) {
 				console.error(
-		 			"FATAL ERROR: EMAIL_PROVIDER is set to 'mailgun', but MAILGUN_API_KEY or MAILGUN_DOMAIN is not defined."
+					"FATAL ERROR: EMAIL_PROVIDER is set to 'mailgun', but MAILGUN_API_KEY or MAILGUN_DOMAIN is not defined."
 				);
 				process.exit( 1 );
 			}
