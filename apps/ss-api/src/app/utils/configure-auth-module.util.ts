@@ -342,6 +342,120 @@ export function configureAuthModuleOptions(
 						'[Auth Hook - Password Reset Completed]: Email provider not configured. Skipping confirmation email.'
 					);
 				}
+			},
+			onVerificationEmailResent: async (
+				user: AuthHookUser,
+				verificationToken?: VerificationToken
+			) => {
+				console.log(
+					`[Auth Hook - Verification Email Resent]: New verification email requested for ${user.email}. Token: ${verificationToken}`
+				);
+
+				if ( !verificationToken ) {
+					console.warn(
+						`[Auth Hook - Verification Email Resent]: No new verification token provided for ${user.email}. Skipping email sending.`
+					);
+					return;
+				}
+
+				if (
+					appSecrets.email.provider &&
+          appSecrets.email.senderAddress &&
+          appSecrets.app.apiBaseUrl
+				) {
+					try {
+						const verificationLink = `${appSecrets.app.apiBaseUrl}/auth/verify-email/${verificationToken}`;
+						const sender: EmailContact = {
+							email: appSecrets.email.senderAddress,
+							name: appSecrets.email.senderName || appSecrets.app.name
+						};
+
+						const emailPayload: Email = {
+							to: {
+								email: user.email,
+								name:
+                  `${user.firstName || ''} ${user.lastName || ''}`.trim() ||
+                  user.email
+							},
+							from: sender, // Can be overridden by defaultSender in creds
+							subject: `Verify Your Email Address - ${appSecrets.app.name} (Resend)`,
+							rawHtml: `
+                <p>Hello ${user.firstName || 'User'},</p>
+                <p>You requested to resend the verification email for your account at ${appSecrets.app.name}. Please verify your email address by clicking the link below:</p>
+                <p><a href="${verificationLink}">Verify Email</a></p>
+                <p>This link will expire in 24 hours.</p>
+                <p>If you did not request this, please ignore this email.</p>
+                <p>Thanks,<br/>The ${appSecrets.app.name} Team</p>
+              `
+						};
+
+						let credsForProvider;
+
+						switch ( appSecrets.email.provider ) {
+						case EmailProvider.sendgrid:
+							if ( !appSecrets.email.sendgridApiKey ) {
+								console.error(
+									'[Auth Hook - Verification Email Resent]: SendGrid provider selected but no API key found. Skipping email.'
+								);
+								return;
+							}
+							credsForProvider = {
+								creds: appSecrets.email.sendgridApiKey,
+								defaultSender: sender
+							} as EmailDependencyCreds<string>;
+							await sendTemplateEmailWith( {
+								provider: EmailProvider.sendgrid,
+								creds: credsForProvider,
+								payload: emailPayload
+							} );
+							console.log(
+								`[Auth Hook - Verification Email Resent]: New verification email sent to ${user.email} via SendGrid.`
+							);
+							break;
+
+						case EmailProvider.mailgun:
+							if ( !appSecrets.email.mailgunApiKey || !appSecrets.email.mailgunDomain ) {
+								console.error(
+									'[Auth Hook - Verification Email Resent]: Mailgun provider selected but API key or domain not found. Skipping email.'
+								);
+								return;
+							}
+							credsForProvider = {
+								creds: {
+									apiKey: appSecrets.email.mailgunApiKey!,
+									domain: appSecrets.email.mailgunDomain!
+								},
+								defaultSender: sender
+							} as EmailDependencyCreds<MailgunCreds>;
+							await sendTemplateEmailWith( {
+								provider: EmailProvider.mailgun,
+								creds: credsForProvider,
+								payload: emailPayload
+							} );
+							console.log(
+								`[Auth Hook - Verification Email Resent]: New verification email sent to ${user.email} via Mailgun.`
+							);
+							break;
+						default:
+							console.warn(
+								`[Auth Hook - Verification Email Resent]: Email provider '${appSecrets.email.provider}' is configured but not supported for sending. Email not sent.`
+							);
+						}
+					} catch ( error ) {
+						console.error(
+							`[Auth Hook - Verification Email Resent]: Failed to send new verification email to ${
+								user.email
+							}. Error: ${
+								error instanceof Error ? error.message : String( error )
+							}`,
+							error
+						);
+					}
+				} else {
+					console.log(
+						'[Auth Hook - Verification Email Resent]: Email provider not configured. Skipping new verification email.'
+					);
+				}
 			}
 		},
 		requireEmailVerificationForLogin:

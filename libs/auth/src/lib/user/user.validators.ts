@@ -32,7 +32,14 @@ export const resetPasswordZodSchema = z.object( {
 	newPassword: z.string().min( 8 ).max( 128 )
 } );
 
+export const resendVerificationEmailZodSchema = z.object( {
+	email: z.string().email().toLowerCase().trim().min( 1 )
+} );
+
 export type UserRegistrationInput = z.infer<typeof userRegistrationZodSchema>;
 export type UserLoginInput = z.infer<typeof userLoginZodSchema>;
 export type ForgotPasswordInput = z.infer<typeof forgotPasswordZodSchema>;
 export type ResetPasswordInput = z.infer<typeof resetPasswordZodSchema>;
+export type ResendVerificationEmailInput = z.infer<
+  typeof resendVerificationEmailZodSchema
+>;

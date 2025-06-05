@@ -2,6 +2,7 @@ import { Router } from 'express';
 import {
 	createForgotPasswordController,
 	createLoginController,
+	createResendVerificationEmailController,
 	createResetPasswordController,
 	createSignupController,
 	createVerifyEmailController
@@ -9,6 +10,7 @@ import {
 import { validateRequestParts } from '../utils';
 import {
 	forgotPasswordZodSchema,
+	resendVerificationEmailZodSchema,
 	resetPasswordZodSchema,
 	userLoginZodSchema,
 	userRegistrationZodSchema
@@ -23,6 +25,8 @@ export function createAuthRouter( authService: AuthService ): Router {
 	const verifyEmailController = createVerifyEmailController( authService );
 	const forgotPasswordController = createForgotPasswordController( authService );
 	const resetPasswordController = createResetPasswordController( authService );
+	const resendVerificationEmailController =
+    createResendVerificationEmailController( authService );
 
 	router.post(
 		'/signup',
@@ -48,6 +52,12 @@ export function createAuthRouter( authService: AuthService ): Router {
 		'/reset-password',
 		validateRequestParts( { body: resetPasswordZodSchema } ),
 		resetPasswordController
+	);
+
+	router.post(
+		'/resend-verification-email',
+		validateRequestParts( { body: resendVerificationEmailZodSchema } ),
+		resendVerificationEmailController
 	);
 
 	// Future routes:

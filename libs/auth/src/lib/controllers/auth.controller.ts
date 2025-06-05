@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { AuthService } from '../services';
 import {
 	ForgotPasswordInput,
+	ResendVerificationEmailInput,
 	ResetPasswordInput,
 	UserLoginInput,
 	UserRegistrationInput
@@ -120,6 +121,28 @@ export function createVerifyEmailController( authService: AuthService ) {
 			}
 		} catch ( error ) {
 			next( error );
+		}
+	};
+}
+
+export function createResendVerificationEmailController(
+	authService: AuthService
+) {
+	return async ( req: Request, res: Response, next: NextFunction ) => {
+		try {
+			await authService.resendVerificationEmail(
+        req.body as ResendVerificationEmailInput
+			);
+			res.status( 200 ).json( {
+				message:
+          'If an account with that email exists and is not yet verified, a new verification email has been sent.'
+			} );
+		} catch ( error ) {
+			console.error( '[ResendVerificationEmailController] Error: ', error );
+			res.status( 200 ).json( {
+				message:
+          'If an account with that email exists and is not yet verified, a new verification email has been sent.'
+			} );
 		}
 	};
 }

@@ -62,22 +62,38 @@ export function initializeAuthModule( options: AuthModuleOptions ): Router {
 					firstName: user.firstName,
 					lastName: user.lastName
 				};
-				await options.hooks!.onPasswordResetRequested!( hookUser, passwordResetToken );
+				await options.hooks!.onPasswordResetRequested!(
+					hookUser,
+					passwordResetToken
+				);
 			}
 		);
 	}
 
 	if ( options.hooks?.onPasswordResetCompleted ) {
+		authService.on( 'passwordResetCompleted', async ( user: IUser ) => {
+			const hookUser: AuthHookUser = {
+				_id: user._id!,
+				email: user.email,
+				firstName: user.firstName,
+				lastName: user.lastName
+			};
+			await options.hooks!.onPasswordResetCompleted!( hookUser );
+		} );
+	}
+
+	if ( options.hooks?.onVerificationEmailResent ) {
 		authService.on(
-			'passwordResetCompleted',
-			async ( user: IUser ) => {
+			'verificationEmailResent',
+			async ( user: IUser, verificationTokenValue: string ) => {
 				const hookUser: AuthHookUser = {
 					_id: user._id!,
 					email: user.email,
 					firstName: user.firstName,
 					lastName: user.lastName
 				};
-				await options.hooks!.onPasswordResetCompleted!( hookUser );
+				const tokenForHook: VerificationToken = verificationTokenValue || null;
+				await options.hooks!.onVerificationEmailResent!( hookUser, tokenForHook );
 			}
 		);
 	}

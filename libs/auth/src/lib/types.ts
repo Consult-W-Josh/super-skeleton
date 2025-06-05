@@ -59,8 +59,16 @@ export interface AuthModuleOptions {
      * Called after a user's password has been successfully reset.
      * @param user Basic information about the user whose password was reset.
      */
-    onPasswordResetCompleted?: (
-      user: AuthHookUser
+    onPasswordResetCompleted?: (user: AuthHookUser) => void | Promise<void>;
+    /**
+     * Called after a request to resend a verification email has been processed
+     * and a new verification token has been generated.
+     * @param user Basic information about the user.
+     * @param verificationToken The new token generated for email verification.
+     */
+    onVerificationEmailResent?: (
+      user: AuthHookUser,
+      verificationToken: VerificationToken
     ) => void | Promise<void>;
   };
   /**
