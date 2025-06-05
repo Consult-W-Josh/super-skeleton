@@ -8,7 +8,7 @@ async function bootstrap() {
 	validateRequiredSecrets( secrets );
 
 	const app = constructApp( {
-		mongoDbUrl: secrets.mongoDbUrl
+		mongoDbUrl: secrets.database.url
 	} );
 
 	const authModuleOptions = configureAuthModuleOptions( secrets );

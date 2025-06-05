@@ -19,8 +19,8 @@ export function configureAuthModuleOptions(
 	appSecrets: Secrets
 ): AuthModuleOptions {
 	return {
-		jwtSecret: appSecrets.jwtSecret!,
-		refreshJwtSecret: appSecrets.refreshJwtSecret!,
+		jwtSecret: appSecrets.auth.jwtSecret!,
+		refreshJwtSecret: appSecrets.auth.refreshJwtSecret!,
 		hooks: {
 			onUserSignUp: async (
 				user: AuthHookUser,
@@ -38,15 +38,15 @@ export function configureAuthModuleOptions(
 				}
 
 				if (
-					appSecrets.emailProvider &&
-          appSecrets.emailSenderAddress &&
-          appSecrets.apiBaseUrl
+					appSecrets.email.provider &&
+          appSecrets.email.senderAddress &&
+          appSecrets.app.apiBaseUrl
 				) {
 					try {
-						const verificationLink = `${appSecrets.apiBaseUrl}/auth/verify-email/${verificationToken}`;
+						const verificationLink = `${appSecrets.app.apiBaseUrl}/auth/verify-email/${verificationToken}`;
 						const sender: EmailContact = {
-							email: appSecrets.emailSenderAddress,
-							name: appSecrets.emailSenderName || appSecrets.appName
+							email: appSecrets.email.senderAddress,
+							name: appSecrets.email.senderName || appSecrets.app.name
 						};
 
 						const emailPayload: Email = {
@@ -57,29 +57,29 @@ export function configureAuthModuleOptions(
                   user.email
 							},
 							from: sender, // Can be overridden by defaultSender in creds
-							subject: `Verify Your Email Address - ${appSecrets.appName}`,
+							subject: `Verify Your Email Address - ${appSecrets.app.name}`,
 							rawHtml: `
                 <p>Hello ${user.firstName || 'User'},</p>
-                <p>Thank you for registering at ${appSecrets.appName}. Please verify your email address by clicking the link below:</p>
+                <p>Thank you for registering at ${appSecrets.app.name}. Please verify your email address by clicking the link below:</p>
                 <p><a href="${verificationLink}">Verify Email</a></p>
                 <p>This link will expire in 24 hours.</p>
                 <p>If you did not create an account using this email address, please ignore this email.</p>
-                <p>Thanks,<br/>The ${appSecrets.appName} Team</p>
+                <p>Thanks,<br/>The ${appSecrets.app.name} Team</p>
               `
 						};
 
 						let credsForProvider;
 
-						switch ( appSecrets.emailProvider ) {
+						switch ( appSecrets.email.provider ) {
 						case EmailProvider.sendgrid:
-							if ( !appSecrets.sendgridApiKey ) {
+							if ( !appSecrets.email.sendgridApiKey ) {
 								console.error(
 									'[Auth Hook - User SignUp]: SendGrid provider selected but no API key found. Skipping email.'
 								);
 								return;
 							}
 							credsForProvider = {
-								creds: appSecrets.sendgridApiKey,
+								creds: appSecrets.email.sendgridApiKey,
 								defaultSender: sender
 							} as EmailDependencyCreds<string>;
 							await sendTemplateEmailWith( {
@@ -93,7 +93,7 @@ export function configureAuthModuleOptions(
 							break;
 
 						case EmailProvider.mailgun:
-							if ( !appSecrets.mailgunApiKey || !appSecrets.mailgunDomain ) {
+							if ( !appSecrets.email.mailgunApiKey || !appSecrets.email.mailgunDomain ) {
 								console.error(
 									'[Auth Hook - User SignUp]: Mailgun provider selected but API key or domain not found. Skipping email.'
 								);
@@ -101,8 +101,8 @@ export function configureAuthModuleOptions(
 							}
 							credsForProvider = {
 								creds: {
-									apiKey: appSecrets.mailgunApiKey!,
-									domain: appSecrets.mailgunDomain!
+									apiKey: appSecrets.email.mailgunApiKey!,
+									domain: appSecrets.email.mailgunDomain!
 								},
 								defaultSender: sender
 							} as EmailDependencyCreds<MailgunCreds>;
@@ -118,7 +118,7 @@ export function configureAuthModuleOptions(
 							// Add cases for Brevo, ElasticEmail if implementing them
 						default:
 							console.warn(
-								`[Auth Hook - User SignUp]: Email provider '${appSecrets.emailProvider}' is configured but not supported for sending. Email not sent.`
+								`[Auth Hook - User SignUp]: Email provider '${appSecrets.email.provider}' is configured but not supported for sending. Email not sent.`
 							);
 						}
 					} catch ( error ) {
@@ -151,15 +151,15 @@ export function configureAuthModuleOptions(
 				);
 
 				if (
-					appSecrets.emailProvider &&
-          appSecrets.emailSenderAddress &&
-          appSecrets.frontendAppUrl
+					appSecrets.email.provider &&
+          appSecrets.email.senderAddress &&
+          appSecrets.app.frontendAppUrl
 				) {
 					try {
-						const resetLink = `${appSecrets.frontendAppUrl}/reset-password?token=${passwordResetToken}`;
+						const resetLink = `${appSecrets.app.frontendAppUrl}/reset-password?token=${passwordResetToken}`;
 						const sender: EmailContact = {
-							email: appSecrets.emailSenderAddress,
-							name: appSecrets.emailSenderName || appSecrets.appName
+							email: appSecrets.email.senderAddress,
+							name: appSecrets.email.senderName || appSecrets.app.name
 						};
 
 						const emailPayload: Email = {
@@ -170,28 +170,28 @@ export function configureAuthModuleOptions(
                   user.email
 							},
 							from: sender,
-							subject: `Password Reset Request - ${appSecrets.appName}`,
+							subject: `Password Reset Request - ${appSecrets.app.name}`,
 							rawHtml: `
                 <p>Hello ${user.firstName || 'User'},</p>
-                <p>We received a request to reset your password for your account at ${appSecrets.appName}.</p>
+                <p>We received a request to reset your password for your account at ${appSecrets.app.name}.</p>
                 <p>If you requested this reset, please click the link below to set a new password:</p>
                 <p><a href="${resetLink}">Reset Password</a></p>
                 <p>This link will expire in 1 hour. If you did not request a password reset, please ignore this email.</p>
-                <p>Thanks,<br/>The ${appSecrets.appName} Team</p>
+                <p>Thanks,<br/>The ${appSecrets.app.name} Team</p>
               `
 						};
 
 						let credsForProvider;
-						switch ( appSecrets.emailProvider ) {
+						switch ( appSecrets.email.provider ) {
 						case EmailProvider.sendgrid:
-							if ( !appSecrets.sendgridApiKey ) {
+							if ( !appSecrets.email.sendgridApiKey ) {
 								console.error(
 									'[Auth Hook - Password Reset]: SendGrid provider selected but no API key found. Skipping email.'
 								);
 								return;
 							}
 							credsForProvider = {
-								creds: appSecrets.sendgridApiKey,
+								creds: appSecrets.email.sendgridApiKey,
 								defaultSender: sender
 							} as EmailDependencyCreds<string>;
 							await sendTemplateEmailWith( {
@@ -204,7 +204,7 @@ export function configureAuthModuleOptions(
 							);
 							break;
 						case EmailProvider.mailgun:
-							if ( !appSecrets.mailgunApiKey || !appSecrets.mailgunDomain ) {
+							if ( !appSecrets.email.mailgunApiKey || !appSecrets.email.mailgunDomain ) {
 								console.error(
 									'[Auth Hook - Password Reset]: Mailgun provider selected but API key or domain not found. Skipping email.'
 								);
@@ -212,8 +212,8 @@ export function configureAuthModuleOptions(
 							}
 							credsForProvider = {
 								creds: {
-									apiKey: appSecrets.mailgunApiKey!,
-									domain: appSecrets.mailgunDomain!
+									apiKey: appSecrets.email.mailgunApiKey!,
+									domain: appSecrets.email.mailgunDomain!
 								},
 								defaultSender: sender
 							} as EmailDependencyCreds<MailgunCreds>;
@@ -228,7 +228,7 @@ export function configureAuthModuleOptions(
 							break;
 						default:
 							console.warn(
-								`[Auth Hook - Password Reset]: Email provider '${appSecrets.emailProvider}' is configured but not supported. Email not sent.`
+								`[Auth Hook - Password Reset]: Email provider '${appSecrets.email.provider}' is configured but not supported. Email not sent.`
 							);
 						}
 					} catch ( error ) {
@@ -252,11 +252,11 @@ export function configureAuthModuleOptions(
 					`[Auth Hook - Password Reset Completed]: Password for user ${user.email} has been reset.`
 				);
 
-				if ( appSecrets.emailProvider && appSecrets.emailSenderAddress ) {
+				if ( appSecrets.email.provider && appSecrets.email.senderAddress ) {
 					try {
 						const sender: EmailContact = {
-							email: appSecrets.emailSenderAddress,
-							name: appSecrets.emailSenderName || appSecrets.appName
+							email: appSecrets.email.senderAddress,
+							name: appSecrets.email.senderName || appSecrets.app.name
 						};
 
 						const emailPayload: Email = {
@@ -267,27 +267,27 @@ export function configureAuthModuleOptions(
                   user.email
 							},
 							from: sender,
-							subject: `Your Password Has Been Changed - ${appSecrets.appName}`,
+							subject: `Your Password Has Been Changed - ${appSecrets.app.name}`,
 							rawHtml: `
                 <p>Hello ${user.firstName || 'User'},</p>
-                <p>This email confirms that the password for your account at ${appSecrets.appName} associated with this email address (${user.email}) was recently changed.</p>
+                <p>This email confirms that the password for your account at ${appSecrets.app.name} associated with this email address (${user.email}) was recently changed.</p>
                 <p>If you made this change, you don't need to do anything.</p>
                 <p>If you did NOT make this change, please contact our support team immediately so we can help secure your account.</p>
-                <p>Thanks,<br/>The ${appSecrets.appName} Team</p>
+                <p>Thanks,<br/>The ${appSecrets.app.name} Team</p>
               `
 						};
 
 						let credsForProvider;
-						switch ( appSecrets.emailProvider ) {
+						switch ( appSecrets.email.provider ) {
 						case EmailProvider.sendgrid:
-							if ( !appSecrets.sendgridApiKey ) {
+							if ( !appSecrets.email.sendgridApiKey ) {
 								console.error(
 									'[Auth Hook - Password Reset Completed]: SendGrid provider selected but no API key found. Skipping confirmation email.'
 								);
 								return;
 							}
 							credsForProvider = {
-								creds: appSecrets.sendgridApiKey,
+								creds: appSecrets.email.sendgridApiKey,
 								defaultSender: sender
 							} as EmailDependencyCreds<string>;
 							await sendTemplateEmailWith( {
@@ -300,7 +300,7 @@ export function configureAuthModuleOptions(
 							);
 							break;
 						case EmailProvider.mailgun:
-							if ( !appSecrets.mailgunApiKey || !appSecrets.mailgunDomain ) {
+							if ( !appSecrets.email.mailgunApiKey || !appSecrets.email.mailgunDomain ) {
 								console.error(
 									'[Auth Hook - Password Reset Completed]: Mailgun provider selected but API key or domain not found. Skipping confirmation email.'
 								);
@@ -308,8 +308,8 @@ export function configureAuthModuleOptions(
 							}
 							credsForProvider = {
 								creds: {
-									apiKey: appSecrets.mailgunApiKey!,
-									domain: appSecrets.mailgunDomain!
+									apiKey: appSecrets.email.mailgunApiKey!,
+									domain: appSecrets.email.mailgunDomain!
 								},
 								defaultSender: sender
 							} as EmailDependencyCreds<MailgunCreds>;
@@ -324,7 +324,7 @@ export function configureAuthModuleOptions(
 							break;
 						default:
 							console.warn(
-								`[Auth Hook - Password Reset Completed]: Email provider '${appSecrets.emailProvider}' is configured but not supported. Confirmation email not sent.`
+								`[Auth Hook - Password Reset Completed]: Email provider '${appSecrets.email.provider}' is configured but not supported. Confirmation email not sent.`
 							);
 						}
 					} catch ( error ) {
@@ -345,6 +345,6 @@ export function configureAuthModuleOptions(
 			}
 		},
 		requireEmailVerificationForLogin:
-      appSecrets.requireEmailVerificationForLogin
+      appSecrets.auth.requireEmailVerificationForLogin
 	};
 }
