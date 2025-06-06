@@ -1,6 +1,10 @@
 import {
 	executeEmailVerification,
+	executeGetCurrentUser,
+	executeGoogleLogin,
 	executeLoginUser,
+	executeLogout,
+	executeRefreshToken,
 	executeRegisterUser,
 	executeRequestPasswordReset,
 	executeResendVerificationEmail,
@@ -11,12 +15,15 @@ import { BaseEventEmitterService } from '../base';
 import {
 	ForgotPasswordInput,
 	IUser,
+	LogoutInput,
+	RefreshTokenInput,
 	ResendVerificationEmailInput,
 	ResetPasswordInput,
 	UserLoginInput,
 	UserModel,
 	UserRegistrationInput
 } from '../user';
+import { AuthHookUser } from '../types';
 
 interface AuthServiceOptions {
   jwtSecret: string;
@@ -26,6 +33,13 @@ interface AuthServiceOptions {
   refreshTokenExpiry?: string;
   userModel?: SsModel<IUser>;
   requireEmailVerificationForLogin?: boolean;
+  googleOAuth?: {
+    clientId: string;
+    clientSecret: string;
+    redirectUri: string;
+    successRedirectUrl: string;
+    failureRedirectUrl: string;
+  };
 }
 
 export class AuthService extends BaseEventEmitterService {
@@ -35,6 +49,13 @@ export class AuthService extends BaseEventEmitterService {
 	private readonly refreshTokenExpiry: string;
 	private readonly userModel: SsModel<IUser>;
 	private readonly requireEmailVerificationForLogin: boolean;
+	public readonly googleOAuthClient?: {
+    clientId: string;
+    clientSecret: string;
+    redirectUri: string;
+    successRedirectUrl: string;
+    failureRedirectUrl: string;
+  };
 
 	constructor( options: AuthServiceOptions ) {
 		super();
@@ -47,6 +68,16 @@ export class AuthService extends BaseEventEmitterService {
       options.requireEmailVerificationForLogin === undefined
       	? true
       	: options.requireEmailVerificationForLogin;
+
+		if ( options.googleOAuth && options.googleOAuth.clientId ) {
+			this.googleOAuthClient = {
+				clientId: options.googleOAuth.clientId,
+				clientSecret: options.googleOAuth.clientSecret,
+				redirectUri: options.googleOAuth.redirectUri,
+				successRedirectUrl: options.googleOAuth.successRedirectUrl,
+				failureRedirectUrl: options.googleOAuth.failureRedirectUrl
+			};
+		}
 	}
 
 	public async registerUser( data: UserRegistrationInput ): Promise<IUser> {
@@ -104,6 +135,54 @@ export class AuthService extends BaseEventEmitterService {
 			data,
 			userModel: this.userModel,
 			eventEmitter: this
+		} );
+	}
+
+	public async refreshToken( data: RefreshTokenInput ): Promise<{
+    accessToken: string;
+    refreshToken: string;
+  }> {
+		return executeRefreshToken( {
+			data,
+			userModel: this.userModel,
+			jwtSecret: this.jwtSecret,
+			accessTokenExpiry: this.accessTokenExpiry,
+			newRefreshTokenExpiry: this.refreshTokenExpiry
+		} );
+	}
+
+	public async logout( data: LogoutInput ): Promise<void> {
+		return executeLogout( {
+			data,
+			eventEmitter: this
+		} );
+	}
+
+	public async getCurrentUser(
+		userId: string
+	): Promise<AuthHookUser | null> {
+		return executeGetCurrentUser( {
+			userId,
+			userModel: this.userModel
+		} );
+	}
+
+	public async loginWithGoogle( code: string ): Promise<{
+    accessToken: string;
+    refreshToken: string;
+    user: Pick<IUser, '_id' | 'email' | 'firstName' | 'lastName'>;
+  }> {
+		if ( !this.googleOAuthClient ) {
+			throw new Error( 'GOOGLE_OAUTH_NOT_CONFIGURED' );
+		}
+		return executeGoogleLogin( {
+			code,
+			googleOAuthClientConfig: this.googleOAuthClient,
+			userModel: this.userModel,
+			eventEmitter: this,
+			jwtSecret: this.jwtSecret,
+			accessTokenExpiry: this.accessTokenExpiry,
+			refreshTokenExpiry: this.refreshTokenExpiry
 		} );
 	}
 }

@@ -42,7 +42,10 @@ export function validateRequiredSecrets( appSecrets: Secrets ): void {
 			}
 			break;
 		case EmailProvider.mailgun:
-			if ( !appSecrets.email.mailgunApiKey || !appSecrets.email.mailgunDomain ) {
+			if (
+				!appSecrets.email.mailgunApiKey ||
+          !appSecrets.email.mailgunDomain
+			) {
 				console.error(
 					"FATAL ERROR: EMAIL_PROVIDER is set to 'mailgun', but MAILGUN_API_KEY or MAILGUN_DOMAIN is not defined."
 				);
@@ -55,6 +58,34 @@ export function validateRequiredSecrets( appSecrets: Secrets ): void {
 				`Warning: EMAIL_PROVIDER is set to '${appSecrets.email.provider}', which is not explicitly handled in validation. Ensure all necessary credentials for this provider are set.`
 			);
 			break;
+		}
+	}
+
+	// Validate Google OAuth configuration if Client ID is present
+	if ( appSecrets.auth.googleClientId ) {
+		if ( !appSecrets.auth.googleClientSecret ) {
+			console.error(
+				'FATAL ERROR: GOOGLE_CLIENT_ID is set, but GOOGLE_CLIENT_SECRET is not defined.'
+			);
+			process.exit( 1 );
+		}
+		if ( !appSecrets.auth.googleOAuthRedirectUri ) {
+			console.error(
+				'FATAL ERROR: GOOGLE_CLIENT_ID is set, but GOOGLE_OAUTH_REDIRECT_URI is not defined.'
+			);
+			process.exit( 1 );
+		}
+		if ( !appSecrets.app.googleOAuthSuccessRedirectUrl ) {
+			console.error(
+				'FATAL ERROR: GOOGLE_CLIENT_ID is set, but GOOGLE_OAUTH_SUCCESS_REDIRECT_URL is not defined.'
+			);
+			process.exit( 1 );
+		}
+		if ( !appSecrets.app.googleOAuthFailureRedirectUrl ) {
+			console.error(
+				'FATAL ERROR: GOOGLE_CLIENT_ID is set, but GOOGLE_OAUTH_FAILURE_REDIRECT_URL is not defined.'
+			);
+			process.exit( 1 );
 		}
 	}
 }

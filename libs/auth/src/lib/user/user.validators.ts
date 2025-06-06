@@ -28,12 +28,20 @@ export const forgotPasswordZodSchema = z.object( {
 } );
 
 export const resetPasswordZodSchema = z.object( {
-	token: z.string().min( 1 ), // Basic validation for token presence
+	token: z.string().min( 1 ),
 	newPassword: z.string().min( 8 ).max( 128 )
 } );
 
 export const resendVerificationEmailZodSchema = z.object( {
 	email: z.string().email().toLowerCase().trim().min( 1 )
+} );
+
+export const refreshTokenZodSchema = z.object( {
+	refreshToken: z.string().min( 1 )
+} );
+
+export const logoutZodSchema = z.object( {
+	refreshToken: z.string().min( 1 )
 } );
 
 export type UserRegistrationInput = z.infer<typeof userRegistrationZodSchema>;
@@ -43,3 +51,5 @@ export type ResetPasswordInput = z.infer<typeof resetPasswordZodSchema>;
 export type ResendVerificationEmailInput = z.infer<
   typeof resendVerificationEmailZodSchema
 >;
+export type RefreshTokenInput = z.infer<typeof refreshTokenZodSchema>;
+export type LogoutInput = z.infer<typeof logoutZodSchema>;

@@ -59,7 +59,7 @@ export interface AuthModuleOptions {
      * Called after a user's password has been successfully reset.
      * @param user Basic information about the user whose password was reset.
      */
-    onPasswordResetCompleted?: (user: AuthHookUser) => void | Promise<void>;
+    onPasswordResetCompleted?: ( user: AuthHookUser ) => void | Promise<void>;
     /**
      * Called after a request to resend a verification email has been processed
      * and a new verification token has been generated.
@@ -76,6 +76,24 @@ export interface AuthModuleOptions {
    * @default true
    */
   requireEmailVerificationForLogin?: boolean;
+  /**
+   * Configuration for Google OAuth 2.0.
+   * If provided, Google social login routes will be enabled.
+   */
+  googleOAuth?: {
+    /** Google Client ID. */
+    clientId: string;
+    /** Google Client Secret. */
+    clientSecret: string;
+    /** URI to redirect to after Google has authenticated the user.
+     * This MUST be registered in your Google Cloud Console.
+     */
+    redirectUri: string;
+    /** URL to redirect the user to after a successful Google login via your app. */
+    successRedirectUrl: string;
+    /** URL to redirect the user to after a failed Google login attempt. */
+    failureRedirectUrl: string;
+  };
 }
 
 /**

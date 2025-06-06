@@ -18,7 +18,7 @@ type Secrets = typeof secrets;
 export function configureAuthModuleOptions(
 	appSecrets: Secrets
 ): AuthModuleOptions {
-	return {
+	const authModuleOptions: AuthModuleOptions = {
 		jwtSecret: appSecrets.auth.jwtSecret!,
 		refreshJwtSecret: appSecrets.auth.refreshJwtSecret!,
 		hooks: {
@@ -93,7 +93,10 @@ export function configureAuthModuleOptions(
 							break;
 
 						case EmailProvider.mailgun:
-							if ( !appSecrets.email.mailgunApiKey || !appSecrets.email.mailgunDomain ) {
+							if (
+								!appSecrets.email.mailgunApiKey ||
+                  !appSecrets.email.mailgunDomain
+							) {
 								console.error(
 									'[Auth Hook - User SignUp]: Mailgun provider selected but API key or domain not found. Skipping email.'
 								);
@@ -204,7 +207,10 @@ export function configureAuthModuleOptions(
 							);
 							break;
 						case EmailProvider.mailgun:
-							if ( !appSecrets.email.mailgunApiKey || !appSecrets.email.mailgunDomain ) {
+							if (
+								!appSecrets.email.mailgunApiKey ||
+                  !appSecrets.email.mailgunDomain
+							) {
 								console.error(
 									'[Auth Hook - Password Reset]: Mailgun provider selected but API key or domain not found. Skipping email.'
 								);
@@ -300,7 +306,10 @@ export function configureAuthModuleOptions(
 							);
 							break;
 						case EmailProvider.mailgun:
-							if ( !appSecrets.email.mailgunApiKey || !appSecrets.email.mailgunDomain ) {
+							if (
+								!appSecrets.email.mailgunApiKey ||
+                  !appSecrets.email.mailgunDomain
+							) {
 								console.error(
 									'[Auth Hook - Password Reset Completed]: Mailgun provider selected but API key or domain not found. Skipping confirmation email.'
 								);
@@ -414,7 +423,10 @@ export function configureAuthModuleOptions(
 							break;
 
 						case EmailProvider.mailgun:
-							if ( !appSecrets.email.mailgunApiKey || !appSecrets.email.mailgunDomain ) {
+							if (
+								!appSecrets.email.mailgunApiKey ||
+                  !appSecrets.email.mailgunDomain
+							) {
 								console.error(
 									'[Auth Hook - Verification Email Resent]: Mailgun provider selected but API key or domain not found. Skipping email.'
 								);
@@ -461,4 +473,22 @@ export function configureAuthModuleOptions(
 		requireEmailVerificationForLogin:
       appSecrets.auth.requireEmailVerificationForLogin
 	};
+
+	if (
+		appSecrets.auth.googleClientId &&
+    appSecrets.auth.googleClientSecret &&
+    appSecrets.auth.googleOAuthRedirectUri &&
+    appSecrets.app.googleOAuthSuccessRedirectUrl &&
+    appSecrets.app.googleOAuthFailureRedirectUrl
+	) {
+		authModuleOptions.googleOAuth = {
+			clientId: appSecrets.auth.googleClientId,
+			clientSecret: appSecrets.auth.googleClientSecret,
+			redirectUri: appSecrets.auth.googleOAuthRedirectUri,
+			successRedirectUrl: appSecrets.app.googleOAuthSuccessRedirectUrl,
+			failureRedirectUrl: appSecrets.app.googleOAuthFailureRedirectUrl
+		};
+	}
+
+	return authModuleOptions;
 }

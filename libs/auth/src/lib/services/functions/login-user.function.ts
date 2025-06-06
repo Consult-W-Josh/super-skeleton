@@ -1,8 +1,8 @@
 import * as argon2 from 'argon2';
-import * as jwt from 'jsonwebtoken';
 import { IUser, UserLoginInput } from '../../user';
 import { DbOp, ssCrud, SsModel } from '@super-skeleton/crud';
 import { BaseEventEmitterService } from '../../base';
+import { generateAndStoreTokens } from './manage-tokens.function';
 
 const MAX_FAILED_LOGIN_ATTEMPTS = 5; // Define the threshold for account locking
 
@@ -101,38 +101,12 @@ async function updateUserLoginTimestamp(
 	return updatedUser;
 }
 
-interface GenerateAuthTokensParams {
-  userId: string;
-  jwtSecret: string;
-  refreshJwtSecret: string;
-  accessTokenExpiry: string;
-  refreshTokenExpiry: string;
-}
-
-function generateAuthTokensForLogin( {
-	userId,
-	jwtSecret,
-	refreshJwtSecret,
-	accessTokenExpiry,
-	refreshTokenExpiry
-}: GenerateAuthTokensParams ): { accessToken: string; refreshToken: string } {
-	const accessTokenPayload = { userId, type: 'access' };
-	const refreshTokenPayload = { userId, type: 'refresh' };
-
-	const accessToken = jwt.sign( accessTokenPayload, jwtSecret, {
-		expiresIn: accessTokenExpiry as any
-	} );
-	const refreshToken = jwt.sign( refreshTokenPayload, refreshJwtSecret, {
-		expiresIn: refreshTokenExpiry as any
-	} );
-	return { accessToken, refreshToken };
-}
-
 interface ExecuteLoginUserParams {
   data: UserLoginInput;
   userModel: SsModel<IUser>;
   eventEmitter: BaseEventEmitterService;
   jwtSecret: string;
+  // No longer used for signing, but kept for consistency if needed elsewhere or for future JWT refresh tokens
   refreshJwtSecret: string;
   accessTokenExpiry: string;
   refreshTokenExpiry: string;
@@ -144,7 +118,7 @@ export async function executeLoginUser( {
 	userModel,
 	eventEmitter,
 	jwtSecret,
-	refreshJwtSecret,
+	// refreshJwtSecret, // Not used directly for opaque token generation
 	accessTokenExpiry,
 	refreshTokenExpiry,
 	requireEmailVerificationForLogin
@@ -176,12 +150,11 @@ export async function executeLoginUser( {
 
 	const updatedUser = await updateUserLoginTimestamp( foundUser, userModel );
 
-	const { accessToken, refreshToken } = generateAuthTokensForLogin( {
+	const { accessToken, refreshToken } = await generateAndStoreTokens( {
 		userId: updatedUser._id!.toString(),
 		jwtSecret,
-		refreshJwtSecret,
 		accessTokenExpiry,
-		refreshTokenExpiry
+		refreshTokenExpiryString: refreshTokenExpiry
 	} );
 
 	eventEmitter.emit( 'userLoggedIn', updatedUser, { method: 'password' } );

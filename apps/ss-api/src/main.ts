@@ -3,6 +3,7 @@ import { initializeAuthModule } from '@super-skeleton/auth';
 import { secrets } from './environment';
 import { validateRequiredSecrets } from './app/utils/validate-env.util';
 import { configureAuthModuleOptions } from './app/utils/configure-auth-module.util';
+import cookieParser from 'cookie-parser';
 
 async function bootstrap() {
 	validateRequiredSecrets( secrets );
@@ -10,6 +11,8 @@ async function bootstrap() {
 	const app = constructApp( {
 		mongoDbUrl: secrets.database.url
 	} );
+
+	app.use( cookieParser() );
 
 	const authModuleOptions = configureAuthModuleOptions( secrets );
 	const authRouter = initializeAuthModule( authModuleOptions );

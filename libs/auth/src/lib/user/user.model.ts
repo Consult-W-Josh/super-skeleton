@@ -1,5 +1,10 @@
 import { Types } from 'mongoose';
-import { SsModel, SsOrms, SsSchema, SsSchemaFieldTypes } from '@super-skeleton/crud';
+import {
+	SsModel,
+	SsOrms,
+	SsSchema,
+	SsSchemaFieldTypes
+} from '@super-skeleton/crud';
 import { ModelNames } from '../constants';
 
 export interface IUser {
@@ -17,6 +22,8 @@ export interface IUser {
   isAccountLocked: boolean;
   failedLoginAttempts: number;
   lastLoginAt?: Date;
+  provider?: string;
+  providerId?: string;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -26,7 +33,7 @@ export const userSsSchema: SsSchema<IUser> = {
 		type: SsSchemaFieldTypes.UniqueRequiredString,
 		extend: {
 			lowercase: true,
-			trim: true,
+			trim: true
 		}
 	},
 	username: {
@@ -93,6 +100,22 @@ export const userSsSchema: SsSchema<IUser> = {
 	},
 	lastLoginAt: {
 		type: SsSchemaFieldTypes.OptionalDate
+	},
+	provider: {
+		type: SsSchemaFieldTypes.RequiredString,
+		extend: {
+			required: false,
+			trim: true
+		}
+	},
+	providerId: {
+		type: SsSchemaFieldTypes.RequiredString,
+		extend: {
+			required: false,
+			unique: true,
+			sparse: true,
+			trim: true
+		}
 	}
 };
 

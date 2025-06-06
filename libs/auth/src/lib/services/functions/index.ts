@@ -4,3 +4,8 @@ export * from './verify-email.function';
 export * from './request-password-reset.function';
 export * from './reset-password.function';
 export * from './resend-verification-email.function';
+export * from './refresh-token.function';
+export * from './logout.function';
+export * from './google-login.function';
+export * from './manage-tokens.function';
+export * from './get-current-user.function';

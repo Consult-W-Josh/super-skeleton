@@ -3,6 +3,7 @@ import { AuthService } from './services';
 import { createAuthRouter } from './routes';
 import { AuthHookUser, AuthModuleOptions, VerificationToken } from './types';
 import { IUser } from './user';
+import { createAuthenticateJwtMiddleware } from './middleware';
 
 export function initializeAuthModule( options: AuthModuleOptions ): Router {
 	if ( !options.jwtSecret || !options.refreshJwtSecret ) {
@@ -17,8 +18,12 @@ export function initializeAuthModule( options: AuthModuleOptions ): Router {
 		accessTokenExpiry: options.accessTokenExpiry,
 		refreshTokenExpiry: options.refreshTokenExpiry,
 		userModel: options.userModel,
-		requireEmailVerificationForLogin: options.requireEmailVerificationForLogin
+		requireEmailVerificationForLogin: options.requireEmailVerificationForLogin,
+		googleOAuth: options.googleOAuth
 	} );
+
+	// Create middleware with the secret from the options
+	const authenticateJwt = createAuthenticateJwtMiddleware( options.jwtSecret );
 
 	// Register Hooks
 	if ( options.hooks?.onUserSignUp ) {
@@ -98,5 +103,6 @@ export function initializeAuthModule( options: AuthModuleOptions ): Router {
 		);
 	}
 
-	return createAuthRouter( authService );
+	// Pass both service and middleware to the router factory
+	return createAuthRouter( { authService, authenticateJwt } );
 }
