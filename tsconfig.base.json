@@ -17,11 +17,12 @@
     "paths": {
       "@super-skeleton/app": ["libs/app/src/index.ts"],
       "@super-skeleton/auth": ["libs/auth/src/index.ts"],
-      "@super-skeleton/auth-client": ["shared/data-access/src/index.ts"],
+      "@super-skeleton/auth-client": ["libs/shared/data-access/auth-client/src/index.ts"],
       "@super-skeleton/crud": ["libs/crud/src/index.ts"],
       "@super-skeleton/licenses": ["libs/licenses/src/index.ts"],
       "@super-skeleton/notifications": ["libs/notifications/src/index.ts"],
       "@super-skeleton/payments": ["libs/payments/src/index.ts"],
+      "@super-skeleton/shared-ui": ["libs/shared/ui/src/index.ts"],
       "@super-skeleton/utils": ["libs/utils/src/index.ts"]
     }
   },

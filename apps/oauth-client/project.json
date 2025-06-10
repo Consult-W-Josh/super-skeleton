@@ -1,0 +1,71 @@
+{
+  "name": "oauth-client",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/oauth-client/src",
+  "projectType": "application",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project oauth-client --web",
+  "targets": {
+    "build": {
+      "executor": "@nx/vite:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/apps/oauth-client"
+      },
+      "configurations": {
+        "development": {
+          "mode": "development"
+        },
+        "production": {
+          "mode": "production"
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/vite:dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "oauth-client:build",
+        "proxyConfig": "apps/oauth-client/proxy.conf.json"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "oauth-client:build:development",
+          "hmr": true
+        },
+        "production": {
+          "buildTarget": "oauth-client:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "preview": {
+      "executor": "@nx/vite:preview-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "oauth-client:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "oauth-client:build:development"
+        },
+        "production": {
+          "buildTarget": "oauth-client:build:production"
+        }
+      }
+    },
+    "test": {
+      "executor": "@nx/vite:test",
+      "outputs": ["{options.reportsDirectory}"],
+      "options": {
+        "passWithNoTests": true,
+        "reportsDirectory": "../../coverage/apps/oauth-client"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    }
+  }
+}

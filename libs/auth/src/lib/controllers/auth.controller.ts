@@ -273,8 +273,13 @@ export function createGoogleOAuthCallbackController( authService: AuthService ) 
 		const { code, state: returnedState } = req.query;
 		const storedState = req.cookies[OAUTH_STATE_COOKIE_NAME];
 
-		// Clear the state cookie immediately after retrieving it
-		res.clearCookie( OAUTH_STATE_COOKIE_NAME, OAUTH_STATE_COOKIE_OPTIONS );
+    // ✅ Clear cookie without maxAge
+		res.clearCookie( OAUTH_STATE_COOKIE_NAME, {
+			httpOnly: true,
+			secure: process.env.NODE_ENV === 'production',
+			sameSite: 'lax',
+			path: '/'
+		} );
 
 		const { successRedirectUrl, failureRedirectUrl } =
       authService.googleOAuthClient;
