@@ -1,0 +1,10 @@
+{
+  "/api": {
+    "target": "https://f8db-143-198-113-103.ngrok-free.app",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/api": ""
+    }
+  }
+}
