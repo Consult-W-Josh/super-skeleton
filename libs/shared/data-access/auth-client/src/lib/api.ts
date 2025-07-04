@@ -1,5 +1,5 @@
 import axios from 'axios';
-import Cookies from 'js-cookie';
+import * as Cookies from 'js-cookie';
 
 // Create an axios instance with default configuration
 const api = axios.create( {

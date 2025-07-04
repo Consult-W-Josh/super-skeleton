@@ -34,8 +34,7 @@ function checkUserAccountStatus(
 	}
 
 	if (
-		( requireEmailVerificationForLogin === undefined ||
-      requireEmailVerificationForLogin === true ) &&
+		( requireEmailVerificationForLogin ?? true ) &&
     !user.isEmailVerified
 	) {
 		throw new Error( 'EMAIL_NOT_VERIFIED' );
@@ -61,7 +60,7 @@ async function handleFailedLoginAttempt(
 
 	if ( updatedFailedAttempts >= MAX_FAILED_LOGIN_ATTEMPTS ) {
 		updates.isAccountLocked = true;
-		// TODO: Emit an event here if an account gets locked
+		// DO: Emit an event here if an account gets locked
 		// eventEmitter.emit('userAccountLocked', { userId: user._id });
 	}
 

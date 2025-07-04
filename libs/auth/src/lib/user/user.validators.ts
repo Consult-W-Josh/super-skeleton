@@ -7,7 +7,7 @@ export const userRegistrationZodSchema = z.object( {
 		.min( 3 )
 		.max( 30 )
 		.regex(
-			/^[a-zA-Z0-9_]+$/,
+			/^\w+$/,
 			'Username can only contain alphanumeric characters and underscores.'
 		)
 		.toLowerCase()
