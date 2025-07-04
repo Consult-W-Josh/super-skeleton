@@ -32,7 +32,7 @@ function prepareEmailCredentials(
   credsForProvider: EmailDependencyCreds<any> | null;
   provider: EmailProvider;
 } {
-	const provider = appSecrets.email.provider as EmailProvider;
+	const provider = appSecrets.email.provider;
 
 	switch ( provider ) {
 	case EmailProvider.sendgrid:

@@ -64,10 +64,7 @@ export class AuthService extends BaseEventEmitterService {
 		this.accessTokenExpiry = options.accessTokenExpiry ?? '15m';
 		this.refreshTokenExpiry = options.refreshTokenExpiry ?? '7d';
 		this.userModel = options.userModel ?? UserModel;
-		this.requireEmailVerificationForLogin =
-      options.requireEmailVerificationForLogin === undefined
-      	? true
-      	: options.requireEmailVerificationForLogin;
+		this.requireEmailVerificationForLogin = options.requireEmailVerificationForLogin ?? true;
 
 		if ( options.googleOAuth?.clientId ) {
 			this.googleOAuthClient = {
