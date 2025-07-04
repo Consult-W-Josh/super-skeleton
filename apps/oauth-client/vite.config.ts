@@ -13,7 +13,7 @@ export default defineConfig( {
       	'.ngrok-free.app',
       	'localhost'
       ],
-		port: 4200,
+		port: 4212,
 		host: 'localhost'
 	},
 	preview: {

@@ -1,8 +1,10 @@
 import React, {
 	createContext,
 	ReactNode,
+	useCallback,
 	useContext,
 	useEffect,
+	useMemo,
 	useState
 } from 'react';
 import Cookies from 'js-cookie';
@@ -29,7 +31,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ( { children } ) => {
 	const [isLoading, setIsLoading] = useState<boolean>( true );
 	const [error, setError] = useState<Error | null>( null );
 
-	const checkAuth = async (): Promise<boolean> => {
+	const checkAuth = useCallback( async (): Promise<boolean> => {
 		setIsLoading( true );
 		setError( null );
 
@@ -59,26 +61,26 @@ export const AuthProvider: React.FC<AuthProviderProps> = ( { children } ) => {
 			setIsLoading( false );
 			return false;
 		}
-	};
+	}, [setIsLoading, setError, setIsAuthenticated, setUser] );
 
-	const clearAuth = () => {
+	const clearAuth = useCallback( () => {
 		setIsAuthenticated( false );
 		setUser( null );
-	};
+	}, [setIsAuthenticated, setUser] );
 
 	// Check authentication status on initial load
 	useEffect( () => {
 		checkAuth();
-	}, [] );
+	}, [checkAuth] );
 
-	const value = {
+	const value = useMemo( () => ( {
 		isAuthenticated,
 		user,
 		isLoading,
 		error,
 		checkAuth,
 		clearAuth
-	};
+	} ), [isAuthenticated, user, isLoading, error, checkAuth, clearAuth] );
 
 	return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
