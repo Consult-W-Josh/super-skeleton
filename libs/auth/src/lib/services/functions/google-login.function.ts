@@ -84,7 +84,7 @@ export async function executeGoogleLogin( {
 			config: { query: { email: email.toLowerCase() } }
 		} );
 
-		if ( existingUserByEmail && existingUserByEmail.provider !== 'google' ) {
+		if ( existingUserByEmail?.provider !== 'google' ) {
 			throw new Error( 'ACCOUNT_EXISTS_DIFFERENT_PROVIDER' );
 		}
 
@@ -110,7 +110,7 @@ export async function executeGoogleLogin( {
 		} );
 	}
 
-	if ( !appUser || !appUser._id ) {
+	if ( !appUser?._id ) {
 		throw new Error( 'USER_LOGIN_CREATION_FAILED' );
 	}
 

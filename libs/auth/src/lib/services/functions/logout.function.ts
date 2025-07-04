@@ -22,7 +22,7 @@ export async function executeLogout( {
 		}
 	} );
 
-	if ( storedRefreshToken && storedRefreshToken.userId ) {
+	if ( storedRefreshToken?.userId ) {
 		// Invalidate the token by setting its expiry to the past
 		await ssCrud.useDb<IRefreshToken, DbOp.u>( {
 			op: DbOp.u,

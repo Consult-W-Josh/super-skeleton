@@ -31,7 +31,7 @@ export async function executeRefreshToken( {
 		}
 	} );
 
-	if ( !storedRefreshToken || !storedRefreshToken.userId ) {
+	if ( !storedRefreshToken?.userId ) {
 		throw new Error( 'INVALID_REFRESH_TOKEN' ); // Not found or malformed
 	}
 

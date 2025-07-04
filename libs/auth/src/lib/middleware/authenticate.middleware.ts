@@ -18,7 +18,7 @@ export function createAuthenticateJwtMiddleware( jwtSecret: string ) {
 	return ( req: RequestWithUser, res: Response, next: NextFunction ) => {
 		const authHeader = req.headers.authorization;
 
-		if ( !authHeader || !authHeader.startsWith( 'Bearer ' ) ) {
+		if ( !authHeader?.startsWith( 'Bearer ' ) ) {
 			return res.status( 401 ).json( {
 				message: 'Unauthorized: Missing or improperly formatted token.'
 			} );
@@ -63,4 +63,4 @@ export function createAuthenticateJwtMiddleware( jwtSecret: string ) {
 				.json( { message: 'An internal error occurred.' } );
 		}
 	};
-} 
+}

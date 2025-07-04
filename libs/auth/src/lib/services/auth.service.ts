@@ -69,7 +69,7 @@ export class AuthService extends BaseEventEmitterService {
       	? true
       	: options.requireEmailVerificationForLogin;
 
-		if ( options.googleOAuth && options.googleOAuth.clientId ) {
+		if ( options.googleOAuth?.clientId ) {
 			this.googleOAuthClient = {
 				clientId: options.googleOAuth.clientId,
 				clientSecret: options.googleOAuth.clientSecret,
