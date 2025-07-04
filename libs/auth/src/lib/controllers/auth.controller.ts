@@ -273,7 +273,7 @@ export function createGoogleOAuthCallbackController( authService: AuthService ) 
 		const { code, state: returnedState } = req.query;
 		const storedState = req.cookies[OAUTH_STATE_COOKIE_NAME];
 
-    // ✅ Clear cookie without maxAge
+		// ✅ Clear cookie without maxAge
 		res.clearCookie( OAUTH_STATE_COOKIE_NAME, {
 			httpOnly: true,
 			secure: process.env.NODE_ENV === 'production',
@@ -300,7 +300,7 @@ export function createGoogleOAuthCallbackController( authService: AuthService ) 
 		}
 
 		try {
-			const { accessToken, refreshToken, user } =
+			const { accessToken, refreshToken } =
         await authService.loginWithGoogle( code );
 
 			// Set auth tokens in cookies
