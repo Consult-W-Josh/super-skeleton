@@ -18,7 +18,7 @@ type Secrets = typeof secrets;
 // Helper function to create sender contact from app secrets
 function createSender( appSecrets: Secrets ): EmailContact {
 	return {
-		email: appSecrets.email.senderAddress!,
+		email: appSecrets.email.senderAddress,
 		name: appSecrets.email.senderName ?? appSecrets.app.name
 	};
 }
@@ -60,8 +60,8 @@ function prepareEmailCredentials(
 		return {
 			credsForProvider: {
 				creds: {
-					apiKey: appSecrets.email.mailgunApiKey!,
-					domain: appSecrets.email.mailgunDomain!
+					apiKey: appSecrets.email.mailgunApiKey,
+					domain: appSecrets.email.mailgunDomain
 				},
 				defaultSender: sender
 			} as EmailDependencyCreds<MailgunCreds>,
@@ -114,8 +114,8 @@ export function configureAuthModuleOptions(
 	appSecrets: Secrets
 ): AuthModuleOptions {
 	const authModuleOptions: AuthModuleOptions = {
-		jwtSecret: appSecrets.auth.jwtSecret!,
-		refreshJwtSecret: appSecrets.auth.refreshJwtSecret!,
+		jwtSecret: appSecrets.auth.jwtSecret,
+		refreshJwtSecret: appSecrets.auth.refreshJwtSecret,
 		hooks: {
 			onUserSignUp: async (
 				user: AuthHookUser,

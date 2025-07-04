@@ -151,7 +151,7 @@ export async function executeLoginUser( {
 	const updatedUser = await updateUserLoginTimestamp( foundUser, userModel );
 
 	const { accessToken, refreshToken } = await generateAndStoreTokens( {
-		userId: updatedUser._id!.toString(),
+		userId: updatedUser._id.toString(),
 		jwtSecret,
 		accessTokenExpiry,
 		refreshTokenExpiryString: refreshTokenExpiry
@@ -163,7 +163,7 @@ export async function executeLoginUser( {
 		accessToken,
 		refreshToken,
 		user: {
-			_id: updatedUser._id!.toString(),
+			_id: updatedUser._id.toString(),
 			email: updatedUser.email,
 			firstName: updatedUser.firstName,
 			lastName: updatedUser.lastName

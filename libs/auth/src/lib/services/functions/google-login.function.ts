@@ -130,7 +130,7 @@ export async function executeGoogleLogin( {
     } ) ) ?? appUser; // Fallback to appUser if update returns null
 
 	const { accessToken, refreshToken } = await generateAndStoreTokens( {
-		userId: updatedAppUser._id!.toString(),
+		userId: updatedAppUser._id.toString(),
 		jwtSecret,
 		accessTokenExpiry,
 		refreshTokenExpiryString: refreshTokenExpiry
@@ -142,7 +142,7 @@ export async function executeGoogleLogin( {
 		accessToken,
 		refreshToken,
 		user: {
-			_id: updatedAppUser._id!.toString(),
+			_id: updatedAppUser._id.toString(),
 			email: updatedAppUser.email,
 			firstName: updatedAppUser.firstName,
 			lastName: updatedAppUser.lastName

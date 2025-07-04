@@ -37,7 +37,7 @@ export function initializeAuthModule( options: AuthModuleOptions ): Router {
 					lastName: user.lastName
 				};
 				const tokenForHook: VerificationToken = verificationTokenValue ?? null;
-				await options.hooks!.onUserSignUp!( hookUser, tokenForHook );
+				await options.hooks.onUserSignUp( hookUser, tokenForHook );
 			}
 		);
 	}
@@ -67,7 +67,7 @@ export function initializeAuthModule( options: AuthModuleOptions ): Router {
 					firstName: user.firstName,
 					lastName: user.lastName
 				};
-				await options.hooks!.onPasswordResetRequested!(
+				await options.hooks.onPasswordResetRequested(
 					hookUser,
 					passwordResetToken
 				);
@@ -83,7 +83,7 @@ export function initializeAuthModule( options: AuthModuleOptions ): Router {
 				firstName: user.firstName,
 				lastName: user.lastName
 			};
-			await options.hooks!.onPasswordResetCompleted!( hookUser );
+			await options.hooks.onPasswordResetCompleted( hookUser );
 		} );
 	}
 
@@ -98,7 +98,7 @@ export function initializeAuthModule( options: AuthModuleOptions ): Router {
 					lastName: user.lastName
 				};
 				const tokenForHook: VerificationToken = verificationTokenValue ?? null;
-				await options.hooks!.onVerificationEmailResent!( hookUser, tokenForHook );
+				await options.hooks.onVerificationEmailResent( hookUser, tokenForHook );
 			}
 		);
 	}
