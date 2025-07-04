@@ -751,13 +751,13 @@ export function NxWelcome( { title }: Readonly<{ title: string }> ) {
                 Build, test and lint your app
 							</summary>
 							<pre>
-								<span># Build</span>
-                nx build {title}
-								<span># Test</span>
-                nx test {title}
-								<span># Lint</span>
-                nx lint {title}
-								<span># Run them together!</span>
+								<span># Build</span>{'\n'}
+                nx build {title}{'\n'}
+								<span># Test</span>{'\n'}
+                nx test {title}{'\n'}
+								<span># Lint</span>{'\n'}
+                nx lint {title}{'\n'}
+								<span># Run them together!</span>{'\n'}
                 nx run-many -p {title} -t build test lint
 							</pre>
 						</details>
@@ -818,9 +818,9 @@ export function NxWelcome( { title }: Readonly<{ title: string }> ) {
                 Add UI library
 							</summary>
 							<pre>
-								<span># Generate UI lib</span>
-                nx g @nx/react:lib ui
-								<span># Add a component</span>
+								<span># Generate UI lib</span>{'\n'}
+                nx g @nx/react:lib ui{'\n'}
+								<span># Add a component</span>{'\n'}
                 nx g @nx/react:component ui/src/lib/button
 							</pre>
 						</details>
