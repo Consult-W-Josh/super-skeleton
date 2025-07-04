@@ -19,7 +19,7 @@ type Secrets = typeof secrets;
 function createSender( appSecrets: Secrets ): EmailContact {
 	return {
 		email: appSecrets.email.senderAddress!,
-		name: appSecrets.email.senderName || appSecrets.app.name
+		name: appSecrets.email.senderName ?? appSecrets.app.name
 	};
 }
 
@@ -152,13 +152,13 @@ export function configureAuthModuleOptions(
 					to: {
 						email: user.email,
 						name:
-              `${user.firstName || ''} ${user.lastName || ''}`.trim() ||
+              `${user.firstName ?? ''} ${user.lastName ?? ''}`.trim() ||
               user.email
 					},
 					from: sender,
 					subject: `Verify Your Email Address - ${appSecrets.app.name}`,
 					rawHtml: `
-						<p>Hello ${user.firstName || 'User'},</p>
+						<p>Hello ${user.firstName ?? 'User'},</p>
 						<p>Thank you for registering at ${appSecrets.app.name}. Please verify your email address by clicking the link below:</p>
 						<p><a href="${verificationLink}">Verify Email</a></p>
 						<p>This link will expire in 24 hours.</p>
@@ -207,13 +207,13 @@ export function configureAuthModuleOptions(
 					to: {
 						email: user.email,
 						name:
-              `${user.firstName || ''} ${user.lastName || ''}`.trim() ||
+              `${user.firstName ?? ''} ${user.lastName ?? ''}`.trim() ||
               user.email
 					},
 					from: sender,
 					subject: `Password Reset Request - ${appSecrets.app.name}`,
 					rawHtml: `
-						<p>Hello ${user.firstName || 'User'},</p>
+						<p>Hello ${user.firstName ?? 'User'},</p>
 						<p>We received a request to reset your password for your account at ${appSecrets.app.name}.</p>
 						<p>If you requested this reset, please click the link below to set a new password:</p>
 						<p><a href="${resetLink}">Reset Password</a></p>
@@ -249,13 +249,13 @@ export function configureAuthModuleOptions(
 					to: {
 						email: user.email,
 						name:
-              `${user.firstName || ''} ${user.lastName || ''}`.trim() ||
+              `${user.firstName ?? ''} ${user.lastName ?? ''}`.trim() ||
               user.email
 					},
 					from: sender,
 					subject: `Your Password Has Been Changed - ${appSecrets.app.name}`,
 					rawHtml: `
-						<p>Hello ${user.firstName || 'User'},</p>
+						<p>Hello ${user.firstName ?? 'User'},</p>
 						<p>This email confirms that the password for your account at ${appSecrets.app.name} associated with this email address (${user.email}) was recently changed.</p>
 						<p>If you made this change, you don't need to do anything.</p>
 						<p>If you did NOT make this change, please contact our support team immediately so we can help secure your account.</p>
@@ -305,13 +305,13 @@ export function configureAuthModuleOptions(
 					to: {
 						email: user.email,
 						name:
-              `${user.firstName || ''} ${user.lastName || ''}`.trim() ||
+              `${user.firstName ?? ''} ${user.lastName ?? ''}`.trim() ||
               user.email
 					},
 					from: sender,
 					subject: `Verify Your Email Address - ${appSecrets.app.name} (Resend)`,
 					rawHtml: `
-						<p>Hello ${user.firstName || 'User'},</p>
+						<p>Hello ${user.firstName ?? 'User'},</p>
 						<p>You requested to resend the verification email for your account at ${appSecrets.app.name}. Please verify your email address by clicking the link below:</p>
 						<p><a href="${verificationLink}">Verify Email</a></p>
 						<p>This link will expire in 24 hours.</p>

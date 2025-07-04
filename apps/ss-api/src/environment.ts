@@ -22,7 +22,7 @@ export const secrets = {
 		senderName: process.env.EMAIL_SENDER_NAME
 	},
 	app: {
-		name: process.env.APP_NAME || 'My Super App',
+		name: process.env.APP_NAME ?? 'My Super App',
 		apiBaseUrl: process.env.API_BASE_URL,
 		frontendAppUrl: process.env.FRONTEND_APP_URL,
 		googleOAuthSuccessRedirectUrl:

@@ -6,7 +6,7 @@ import Cookies from 'js-cookie';
 const DashboardPage: React.FC = () => {
 	const { user, isLoading } = useAuth();
 	const [copied, setCopied] = useState( false );
-	const accessToken = Cookies.get( 'ss_access_token' ) || '';
+	const accessToken = Cookies.get( 'ss_access_token' ) ?? '';
 
 	const handleLogout = async () => {
 		try {

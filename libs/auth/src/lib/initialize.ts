@@ -36,7 +36,7 @@ export function initializeAuthModule( options: AuthModuleOptions ): Router {
 					firstName: user.firstName,
 					lastName: user.lastName
 				};
-				const tokenForHook: VerificationToken = verificationTokenValue || null;
+				const tokenForHook: VerificationToken = verificationTokenValue ?? null;
 				await options.hooks!.onUserSignUp!( hookUser, tokenForHook );
 			}
 		);
@@ -97,7 +97,7 @@ export function initializeAuthModule( options: AuthModuleOptions ): Router {
 					firstName: user.firstName,
 					lastName: user.lastName
 				};
-				const tokenForHook: VerificationToken = verificationTokenValue || null;
+				const tokenForHook: VerificationToken = verificationTokenValue ?? null;
 				await options.hooks!.onVerificationEmailResent!( hookUser, tokenForHook );
 			}
 		);

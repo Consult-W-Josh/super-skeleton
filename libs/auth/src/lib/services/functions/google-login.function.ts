@@ -127,7 +127,7 @@ export async function executeGoogleLogin( {
     			isAccountLocked: false
     		}
     	}
-    } ) ) || appUser; // Fallback to appUser if update returns null
+    } ) ) ?? appUser; // Fallback to appUser if update returns null
 
 	const { accessToken, refreshToken } = await generateAndStoreTokens( {
 		userId: updatedAppUser._id!.toString(),

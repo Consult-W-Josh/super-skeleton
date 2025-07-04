@@ -61,9 +61,9 @@ export class AuthService extends BaseEventEmitterService {
 		super();
 		this.jwtSecret = options.jwtSecret;
 		this.refreshJwtSecret = options.refreshJwtSecret;
-		this.accessTokenExpiry = options.accessTokenExpiry || '15m';
-		this.refreshTokenExpiry = options.refreshTokenExpiry || '7d';
-		this.userModel = options.userModel || UserModel;
+		this.accessTokenExpiry = options.accessTokenExpiry ?? '15m';
+		this.refreshTokenExpiry = options.refreshTokenExpiry ?? '7d';
+		this.userModel = options.userModel ?? UserModel;
 		this.requireEmailVerificationForLogin =
       options.requireEmailVerificationForLogin === undefined
       	? true

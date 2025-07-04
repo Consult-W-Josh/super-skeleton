@@ -53,7 +53,7 @@ async function handleFailedLoginAttempt(
 	user: IUser,
 	userModel: SsModel<IUser>
 ): Promise<void> {
-	const updatedFailedAttempts = ( user.failedLoginAttempts || 0 ) + 1;
+	const updatedFailedAttempts = ( user.failedLoginAttempts ?? 0 ) + 1;
 
 	const updates: Partial<IUser> = {
 		failedLoginAttempts: updatedFailedAttempts

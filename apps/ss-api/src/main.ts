@@ -22,7 +22,7 @@ async function bootstrap() {
 		res.send( { message: 'Hello API' } );
 	} );
 
-	const port = process.env.PORT || 4212;
+	const port = process.env.PORT ?? 4212;
 	const server = app.listen( port, () => {
 		console.log( `🚀 Application is running on: http://localhost:${port}` );
 	} );

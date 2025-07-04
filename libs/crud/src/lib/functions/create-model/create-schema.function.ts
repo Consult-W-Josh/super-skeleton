@@ -78,7 +78,7 @@ export function createSchema<T>(
 				default: defaultValue,
 				schema,
 				...otherExtendProps
-			} = ssFieldDefinition.extend || {};
+			} = ssFieldDefinition.extend ?? {};
 			schDef[key] = { ...baseDefinition, ...otherExtendProps };
 		} );
 
