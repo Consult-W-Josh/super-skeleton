@@ -5,7 +5,7 @@
  Delete this file and get started with your project!
  * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  */
-export function NxWelcome( { title }: { title: string } ) {
+export function NxWelcome( { title }: Readonly<{ title: string }> ) {
 	return (
 		<>
 			<style
@@ -459,7 +459,6 @@ export function NxWelcome( { title }: { title: string } ) {
 						<div className="logo-container">
 							<svg
 								fill="currentColor"
-								role="img"
 								viewBox="0 0 24 24"
 								xmlns="http://www.w3.org/2000/svg"
 							>
@@ -553,7 +552,6 @@ export function NxWelcome( { title }: { title: string } ) {
 									className="list-item-link"
 								>
 									<svg
-										role="img"
 										viewBox="0 0 24 24"
 										fill="currentColor"
 										xmlns="http://www.w3.org/2000/svg"
@@ -626,7 +624,6 @@ export function NxWelcome( { title }: { title: string } ) {
 							>
 								<svg
 									fill="currentColor"
-									role="img"
 									viewBox="0 0 24 24"
 									xmlns="http://www.w3.org/2000/svg"
 								>
@@ -648,7 +645,6 @@ export function NxWelcome( { title }: { title: string } ) {
 							>
 								<svg
 									fill="currentColor"
-									role="img"
 									viewBox="0 0 24 24"
 									xmlns="http://www.w3.org/2000/svg"
 								>
@@ -698,7 +694,6 @@ export function NxWelcome( { title }: { title: string } ) {
 								<div>
 									<svg
 										id="nx-cloud-logo"
-										role="img"
 										xmlns="http://www.w3.org/2000/svg"
 										stroke="currentColor"
 										fill="transparent"
