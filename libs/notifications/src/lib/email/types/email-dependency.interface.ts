@@ -51,11 +51,11 @@ export abstract class EmailDependency<Creds = unknown> {
   protected abstract sendEmail( email: Email ): Promise<unknown>;
 
   protected getSender( email: Email ) {
-  	return email.from || this.defaultSender;
+  	return email.from ?? this.defaultSender;
   }
 
   protected getTemplate( email: Email ) {
-  	return email.template || this.defaultTemplate;
+  	return email.template ?? this.defaultTemplate;
   }
 
   protected validatePayload( email: Email ) {
