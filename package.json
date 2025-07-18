@@ -5,6 +5,8 @@
   "scripts": {
     "serve": "nx run-many --target=serve --all --parallel=7",
     "glib": "node ./ss-cli/generate-lib.js",
+    "build": "nx run-many --target=build --all",
+    "clean": "nx reset && nx run-many --target=clean --all && rm -rf node_modules && rm -rf dist && rm -rf tmp",
     "lint": "nx run-many --target=lint --all",
     "release": "nx release -y"
   },
